@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webpage with Header, Footer, Sidebar, and Main</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      .grid-container {
+        display: grid;
+        grid-template-columns: 1fr 5fr;
+        grid-template-rows: 1fr 7fr 0.5fr;
+        height: 100%;
+      }
+
+      .header {
+        grid-column: 1 / span 2;
+        background-color: #007bff;
+        color: white;
+        padding: 0.5rem;
+	   position:relative;
+	   align-items: center;
+      }
+
+      .sidebar {
+        grid-row: 2 / span 1;
+        background-color: #f8f9fa;;
+        padding: 1rem;
+      }
+
+      .main {
+        grid-row: 2 / span 1;
+        grid-column: 2 / span 1;
+        padding: 1rem;
+      }
+
+      .footer {
+        grid-column: 1 / span 2;
+        background-color: #007bff;
+        color: white;
+        padding: 1rem;
+	   text-align: center;
+      }
+/* Style the sidebar */
+    #sidebar h3 {
+      font-size: 20px;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+    #sidebar ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    #sidebar li {
+      margin-bottom: 10px;
+    }
+    #sidebar a {
+      color: #343a40;
+      text-decoration: none;
+    }
+    #sidebar a:hover {
+      color: #007bff;
+    }
+
+    /*style the header*/
+    #headTitle{
+      position: absolute;
+      left: 0;
+      padding: 10px;
+    }
+    #headOptions{
+      position: absolute;
+      right: 0;
+      padding: 10px;
+    }
+    /* this card is inspired form this - https://georgefrancis.dev/ */
+
+.card {
+  --border-radius: 0.75rem;
+  --primary-color: #7257fa;
+  --secondary-color: #3c3852;
+  font-family: "Arial";
+  padding: 1rem;
+  cursor: pointer;
+  border-radius: var(--border-radius);
+  background: #f8f9fa;
+  box-shadow: 0px 8px 16px 0px rgb(0 0 0 / 3%);
+  position: relative;
+}
+
+.card > * + * {
+  margin-top: 1.1em;
+}
+
+.card .card__content {
+  color: var(--secondary-color);
+  font-size: 0.86rem;
+}
+
+.card .card__title {
+  padding: 0;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.card .card__date {
+  color: #6e6b80;
+  font-size: 0.8rem;
+}
+/* hover */
+.card:hover .card__title {
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+    </style>
+  </head>
+  <body>
+    <div class="grid-container">
+      <div class="header">
+
+<img src="https://w7.pngwing.com/pngs/411/956/png-transparent-customer-login-avatar-head-portrait-client-user-thumbnail.png" alt="User" style="width:50px;height:50px;position:absolute;right:0;margin-right:20px;">
+      <h1 id = "headTitle">TU_Labs</h1>
+
+
+      </div>
+      <div class="sidebar">
+
+      <h3>Options</h3>
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link active" href="/login/Student/dashboard">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="/login/Student/announcement">Announcement</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/login/Student/assignment">Assignment</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/login/Student/report">Report</a>
+        </li>
+
+      </div>
+      <div class="main">
+        <% announcement.forEach(announcement => { %>
+          <div class="card">
+            <h3 class="card__title"><%= announcement.title %></h3>
+            <p class="card__content"><%= announcement.discription %> </p>
+            <div class="card__date"><%= announcement.date %></div>
+          </div>
+        <% }); %>
+      </div>
+
+      <div class="footer">
+          <p>&copy; 2023 anubhavbinit</p>
+      </div>
+    </div>
+</body>
+</html>

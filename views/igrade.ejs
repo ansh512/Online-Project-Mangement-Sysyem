@@ -197,6 +197,59 @@
     background: #0d45a5;
   }
 
+.dropdown-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dropdown {
+  position: relative;
+
+}
+
+.dropdown-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #eee;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+	display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #fff;
+  padding: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  max-height: 0;
+  overflow: hidden;
+  width: 100%;
+  transition: max-height 0.3s ease-out;
+}
+
+.dropdown-menu li {
+  padding: 5px 0;
+  cursor: pointer;
+}
+
+.dropdown-menu li:hover {
+  background-color: #eee;
+}
+
+.arrow {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 5px 5px 0 5px;
+  border-color: #555 transparent transparent transparent;
+  margin-left: 10px;
+}
+
+
     </style>
   </head>
   <body>
@@ -213,55 +266,65 @@
       <h3>Options</h3>
       <ul class="nav flex-column">
         <li class="nav-item">
-          <a class="nav-link active" href="/login/Instructor/<%=course %>/grade">Submissions</a>
+          <a class="nav-link active" href="/login/Student/<%=course %>/grade">Submissions</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/login/Instructor/<%=course %>">Post assignments</a>
+          <a class="nav-link" href="/login/Student/<%=course %>">Post assignments</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/login/Instructor/<%=course %>/reports">Reports</a>
+          <a class="nav-link" href="/login/Student/<%=course %>/reports">Reports</a>
         </li>
 
       </div>
       <div class="main">
-
-        <h2><%= course %></h2>
-        <h3>Post Assignments</h3>
-
-   <form action="/login/Instructor/<%=course %>/assignment" method="post" enctype="multipart/form-data">
-      <div>
-          <div class="form-group">
-            <label for="field1">Course ID</label>
-            <input required = "" type="text" class="form-control" name="courseID" value=<%= course %> readonly>
-          </div>
-          <div class="form-group">
-            <label for="field2">Title</label>
-            <input required = "" type="text" class="form-control" name="title" placeholder="Enter field 2">
-          </div>
-          <div class="form-group">
-            <label for="field3">Submission Date</label>
-            <input required = "" type="Date" class="form-control" name="submissionDate" placeholder="Enter field 3">
-          </div>
-          <div class="form-group">
-            <label for="field3">Max-Points</label>
-            <input required = "" type="number" class="form-control" name="points" placeholder="Enter field 3">
-          </div>
-          <div class="form-group">
-            <label for="pdf">Upload assignment:</label><br>
-            <input required = "" type="file" class="form-control" name="pdf"><br>
-          </div>
-      </div>
-      <br>
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-
-      </div>
+        <% assignment.forEach(assignment => { %>
+            <div class="dropdown-container">
+                <div class="dropdown">
+                  <div class="dropdown-header">
+                    <span><%= assignment.title %></span>
+                    <div class="arrow"></div>
+                  </div>
+                  <ul class="dropdown-menu">
+                    <li><span><%= submission.courseID %></span></li>
+                    <li><span><%= submission.courseID %></span></li>
+                    <li><span><%= submission.courseID %></span></li>
+                  </ul>
+                </div>
+          <% }); %>
+        </div>
+    </div>
       <div class="footer">
           <p>&copy; 2023 anubhavbinit</p>
       </div>
     </div>
 
   <script>
+var dropdowns = document.querySelectorAll('.dropdown');
+
+dropdowns.forEach(function(dropdown) {
+  var header = dropdown.querySelector('.dropdown-header');
+  var menu = dropdown.querySelector('.dropdown-menu');
+  
+  header.addEventListener('click', function() {
+    if (menu.style.maxHeight) {
+        menu.style.display = "none";
+        menu.style.maxHeight = null;
+    } else {
+      // close all other dropdown menus
+      dropdowns.forEach(function(otherDropdown) {
+        if (otherDropdown != dropdown) {
+          var otherMenu = otherDropdown.querySelector('.dropdown-menu');
+          otherMenu.style.display = "none";
+          otherMenu.style.maxHeight = null;
+
+        }
+      });
+      // open this dropdown menu
+      menu.style.display = "block";
+      menu.style.maxHeight = menu.scrollHeight + 'px';
+    }
+  });
+});
 
 
 </script>

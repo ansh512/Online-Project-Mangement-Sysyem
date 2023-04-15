@@ -1,14 +1,15 @@
 const express = require('express'),
     router = express.Router(),
-    bodyParser = require('body-parser'),
-    Student = require(__dirname + "/../user_model/user_model1.js");
-    Admin = require(__dirname + "/../user_model/user_model3.js");
-    Instructor = require(__dirname + "/../user_model/user_model2.js");
-    adminRoutes = require(__dirname + '/admin'),
-    instructorRoutes = require(__dirname + '/instructor');
+    bodyParser = require('body-parser');
     session = require('express-session');
+    Student = require(__dirname + "/../user_model/user_model1.js"),
+    Admin = require(__dirname + "/../user_model/user_model3.js"),
+    Instructor = require(__dirname + "/../user_model/user_model2.js"),
+    adminRoutes = require(__dirname + '/admin'),
+    instructorRoutes = require(__dirname + '/instructor'),
+    studentRoutes = require(__dirname + '/student');
 
-    router.use(bodyParser.urlencoded({ extended: true }));
+router.use(bodyParser.urlencoded({ extended: true }));
 
 router.get('/', (req,res)=>{
   res.render("login");
@@ -71,6 +72,6 @@ router.post('/', (req,res) =>{
 
 router.use('/admin',adminRoutes);
 router.use('/instructor', instructorRoutes);
-
+router.use('/student', studentRoutes);
 
 module.exports = router;

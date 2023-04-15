@@ -119,26 +119,28 @@
     <img src="https://w7.pngwing.com/pngs/411/956/png-transparent-customer-login-avatar-head-portrait-client-user-thumbnail.png" alt="User" style="width:50px;height:50px;position:absolute;right:0;margin-right:20px;">
     <h1 class = "headTitle">TU_Labs</h1>
   </header>
-  <main>
-    <% course.forEach(course => { %>
-      <a href="/login/Instructor/<%= course.courseID %>">
+  <% course.forEach(innerArr => {
+    innerArr.forEach(c => { %>
+      <a href="/login/Student/<%= c.courseID %>">
         <div class="flip-card">
           <div class="flip-card-inner">
             <div class="flip-card-front">
-              <p class="title"><%= course.name %></p>
+              <p class="title"><%= c.name %></p>
               <p>Hover</p>
             </div>
             <div class="flip-card-back">
-              <p class="title"><%= course.name %></p>
-              <p class="title"><%= course.courseID %></p>
-              <p class="title"><%= course.instructor %></p>
+              <p class="title"><%= c.name %></p>
+              <p class="title"><%= c.courseID %></p>
+              <p class="title"><%= c.instructor %></p>
               <p>Leave Me</p>
             </div> 
           </div>
         </div>
       </a>
-    <% }); %>
-    
+    <% }); 
+  }); %>
+  
+  
   </main>
   <footer>
     <p>Copyright &copy; 2023 anubhsvbinit</p>

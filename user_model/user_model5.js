@@ -6,14 +6,6 @@ const assignmentSchema = new mongoose.Schema({
     type: String,
     ref: 'Courses',
     required: true,
-    validate: {
-      validator: function(value) {
-          return Courses.findOne({courseID: value}).exec().then(course => {
-            return course !== null;
-          });
-        },
-        message: 'Invalid courseID: {VALUE}',    
-    },
   },
   title: {
     type: String,
@@ -24,15 +16,18 @@ const assignmentSchema = new mongoose.Schema({
     required: true,
   },
   issuedDate: {
-    type: Date,
+    type: String,
     required: true,
   },
   submissionDate: {
     type: Date,
     required: true,
   },
+  points: {
+    type:  Number,
+    required: true,
+  }
 });
 
 const Assignment = mongoose.model('Assignment', assignmentSchema);
-
 module.exports = Assignment;

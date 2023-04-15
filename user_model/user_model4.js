@@ -26,9 +26,6 @@ const courseSchema = new Schema({
           message: 'Invalid name: {VALUE}',    
       },
   },
-  assignments: [{
-    type: String
-  }]
 });
 
 module.exports = mongoose.model('Course', courseSchema);

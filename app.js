@@ -11,7 +11,8 @@ const app = express();
 app.use(session({
     secret: 'myappsecret',
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    cookie: { maxAge: 3600000 }
   }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");

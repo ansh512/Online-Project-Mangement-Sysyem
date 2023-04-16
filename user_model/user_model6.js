@@ -13,13 +13,16 @@ const submissionSchema = new mongoose.Schema({
     ref: 'Student',
     required: true
   },
-  submissionID: {
+  submissionDate: {
     type: String,
     required: true
   },
-  submissionDate: {
-    type: Date,
-    required: true
+  path: {
+    type: String,
+    required: true,
+  },
+  grade:{
+    type: Number
   }
 });
 

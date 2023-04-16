@@ -61,26 +61,35 @@ router.get('/:id', (req, res)=>{
     res.render('iassignments',{course: courseId});
 });
 
-router.get('/:id/grade',(req, res) => {
-  const courseId = req.params.id;
-     Assignment.find({ courseID: courseId })
-     .then((assignments) => {
-      if (!Array.isArray(assignments)) {
-        assignments = [assignments];
+router.get('/:id/grade', async (req, res) => {
+  try {
+    const courseId = req.params.id;
+    const assignments = await Assignment.find({ courseID: courseId });
+    const submissions = [];
+    for (let i = 0; i < assignments.length; i++) {
+      const submission = await Submissions.find({ assignmentID: assignments[i]._id });
+      if (submission) {
+        submissions.push(submission);
       }
-      const submissions = [];
-      for(let i = 0; i < assignments.length; i++) {
-        const submission = Submissions.findOne({ assignmentID: assignments._id });
-        if (submission) {
-          submissions.push(submission);
-        }
+    }
+
+    // Loop through the submissions array and add student name to each submission object
+    for (let i = 0; i < submissions.length; i++) {
+      for (let j = 0; j < submissions[i].length; j++) {
+        const studentId = submissions[i][j].studentID;
+        const student = await Student.findOne({ _id: studentId });
+        submissions[i][j].studentName = student ? student.name : 'Unknown';
       }
-    res.render('igrade',{course:req.params.id,assignment: assignments,submission:submissions});
-    })
-    .catch((error) => {
-      console.log(error);
-    })
+    }
+
+    console.log(submissions);
+    res.render('igrade', { course: req.params.id, assignment: assignments, submission: submissions });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send('Internal server error');
+  }
 });
+
 
 router.post('/:id/assignment', upload.single('pdf'), async (req, res) => {
   const courseID = req.body.courseID;

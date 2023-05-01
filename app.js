@@ -23,6 +23,19 @@ app.use(express.static(__dirname + '/views'));
 
 app.use("/login", loginRoutes);
 
+app.get('/logout', (req, res) => {
+  // Invalidate the user's session
+  req.session.destroy((err) => {
+    if (err) {
+      console.error('Error destroying session:', err);
+    } else {
+      // Redirect the user to a login page or another appropriate destination
+      res.redirect('/login');
+    }
+  });
+});
+
+
 
 app.listen(3000, () => {
     console.log("Server started on port 3000.");

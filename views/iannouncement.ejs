@@ -50,34 +50,6 @@
         text-align: center;
       }
 
-    /* style for form element */
-      .form-group label {
-        font-weight: bold;
-        margin-bottom: 5px;
-        text-transform: uppercase;
-      }
-      .form-control {
-        border-radius: 0;
-      }
-      .form-control:focus {
-        box-shadow: none;
-      }
-      .form-group small {
-        color: #6c757d;
-        font-size: 12px;
-      }
-      /* Style the submit button */
-      button[type="submit"] {
-        background-color: #007bff;
-        border-color: #007bff;
-        text-transform: uppercase;
-        transition: all 0.2s ease-in-out;
-      }
-      button[type="submit"]:hover {
-        background-color: #0069d9;
-        border-color: #0062cc;
-      }
-
       /* sidebar style */
       .nav-item {
         margin-bottom: 10px;
@@ -95,7 +67,37 @@
         background-color: #007bff;
         color: white;
       }
+      /* this card is inspired form this - https://georgefrancis.dev/ */
 
+    .card {
+        --border-radius: 0.75rem;
+        --primary-color: #7257fa;
+        --secondary-color: #3c3852;
+        width: 210px;
+        font-family: "Arial";
+        padding: 1rem;
+        cursor: pointer;
+        border-radius: var(--border-radius);
+        background: #f1f1f3;
+        box-shadow: 0px 8px 16px 0px rgb(0 0 0 / 3%);
+        position: relative;
+    }
+    .card > * + * {
+        margin-top: 1.1em;
+    }
+    .card .card__content {
+        color: var(--secondary-color);
+        font-size: 0.86rem;
+    }
+    .card .card__title {
+        padding: 0;
+        font-size: 1.3rem;
+        font-weight: bold;
+    }
+    .card .card__date {
+        color: #6e6b80;
+        font-size: 0.8rem;
+    }
     </style>
   </head>
 
@@ -127,30 +129,14 @@
       </div>
 
       <div class="main">
-        <h3>Post Assignments</h3>
-        <form action="/login/Instructor/<%=course %>/assignment" method="post" enctype="multipart/form-data" onsubmit="showAlert()">
-          <div class="form-group">
-            <label for="field1">Course ID</label>
-            <input required = "" type="text" class="form-control" name="courseID" value=<%= course %> readonly>
-          </div>
-          <div class="form-group">
-            <label for="field2">Title</label>
-            <input required = "" type="text" class="form-control" name="title" placeholder="Enter field 2">
-          </div>
-          <div class="form-group">
-            <label for="field3">Submission Date</label>
-            <input required = "" type="Date" class="form-control" name="submissionDate" placeholder="Enter field 3">
-          </div>
-          <div class="form-group">
-            <label for="field3">Max-Points</label>
-            <input required = "" type="number" class="form-control" name="points" placeholder="Enter field 3">
-          </div>
-          <div class="form-group">
-            <label for="pdf">Upload assignment:</label><br>
-            <input required = "" type="file" class="form-control" name="pdf"><br>
-          </div>
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+        <% announcement.forEach(announcement => { %>
+            <div class="card">
+              <h3 class="card__title"><%= announcement.title %></h3>
+              <p class="card__content"><%= announcement.discription %> </p>
+              <div class="card__date"><%= announcement.date %></div>
+            </div>
+          <% }); %>
+          
       </div>
 
       <hr style="height:2px;border-width:0;color:gray;background-color:gray"/>
@@ -187,16 +173,6 @@
             window.location.href = selectedValue;
           }
         });
-
-        const form = document.querySelector('form');
-        form.addEventListener('submit', (event) => {
-          event.preventDefault(); // Prevent the default form submission
-          // Perform any additional validation or processing here
-          alert('Form posted successfully'); // Show the success message in an alert
-          form.submit(); // Submit the form normally
-        });
-
-
     </script>
   </body>
 </html>

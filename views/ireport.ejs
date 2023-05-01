@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Instructor</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <style>
       body {
@@ -50,34 +51,6 @@
         text-align: center;
       }
 
-    /* style for form element */
-      .form-group label {
-        font-weight: bold;
-        margin-bottom: 5px;
-        text-transform: uppercase;
-      }
-      .form-control {
-        border-radius: 0;
-      }
-      .form-control:focus {
-        box-shadow: none;
-      }
-      .form-group small {
-        color: #6c757d;
-        font-size: 12px;
-      }
-      /* Style the submit button */
-      button[type="submit"] {
-        background-color: #007bff;
-        border-color: #007bff;
-        text-transform: uppercase;
-        transition: all 0.2s ease-in-out;
-      }
-      button[type="submit"]:hover {
-        background-color: #0069d9;
-        border-color: #0062cc;
-      }
-
       /* sidebar style */
       .nav-item {
         margin-bottom: 10px;
@@ -115,45 +88,33 @@
         <p><%=course%></p>
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a class="nav-link active" href="/login/Instructor/<%=course %>">Post</a>
+            <a class="nav-link" href="/login/Instructor/<%=course %>">Post</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/login/Instructor/<%=course %>/grade">Submissions</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/login/Instructor/<%=course %>/report">Reports</a>
+            <a class="nav-link active" href="/login/Instructor/<%=course %>/report">Reports</a>
           </li>
         </ul>
       </div>
 
       <div class="main">
-        <h3>Post Assignments</h3>
-        <form action="/login/Instructor/<%=course %>/assignment" method="post" enctype="multipart/form-data" onsubmit="showAlert()">
-          <div class="form-group">
-            <label for="field1">Course ID</label>
-            <input required = "" type="text" class="form-control" name="courseID" value=<%= course %> readonly>
-          </div>
-          <div class="form-group">
-            <label for="field2">Title</label>
-            <input required = "" type="text" class="form-control" name="title" placeholder="Enter field 2">
-          </div>
-          <div class="form-group">
-            <label for="field3">Submission Date</label>
-            <input required = "" type="Date" class="form-control" name="submissionDate" placeholder="Enter field 3">
-          </div>
-          <div class="form-group">
-            <label for="field3">Max-Points</label>
-            <input required = "" type="number" class="form-control" name="points" placeholder="Enter field 3">
-          </div>
-          <div class="form-group">
-            <label for="pdf">Upload assignment:</label><br>
-            <input required = "" type="file" class="form-control" name="pdf"><br>
-          </div>
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+        <span>TOTAL STUDENT: <%=totalStudent%></span>
+        <span style="margin-left: 50px;">TOTAL Assignments: <%=totalAssignment%></span>
+
+        <canvas id="myChart" style="width:100%;max-width:700px;height:200px; margin:20px">></canvas>
+        <div>
+          <select id="students" name="students" onchange="populategraph()">
+            <option value="">Select student</option>
+            <% students.forEach(function(student) { %>
+              <option value="<%= student._id %>"><%= student.roll %></option>
+            <% }) %>
+          </select>
+        </div>
+        <canvas id="myChart2" style="width:100%;max-width:700px;height:200px; margin:20px">></canvas>
       </div>
 
-      <hr style="height:2px;border-width:0;color:gray;background-color:gray"/>
       <div class="footer">
           <p>&copy; 2023 anubhavbinit</p>
       </div>
@@ -188,15 +149,59 @@
           }
         });
 
-        const form = document.querySelector('form');
-        form.addEventListener('submit', (event) => {
-          event.preventDefault(); // Prevent the default form submission
-          // Perform any additional validation or processing here
-          alert('Form posted successfully'); // Show the success message in an alert
-          form.submit(); // Submit the form normally
+        document.addEventListener('DOMContentLoaded', () => {
+          try {
+          fetch('/login/Instructor/<%=course%>/data')
+            .then(response => response.json())
+            .then(data => {
+              const ctx = document.getElementById('myChart').getContext('2d');
+              const chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                  labels: data.labels,
+                  datasets: [{
+                    label: 'Assignments',
+                    data: data.data,
+                    borderColor: 'rgb(255, 99, 132)',
+                    tension: 0.1
+                  }]
+                },
+                options: {}
+              });
+            })
+            .catch(error => console.error(error));
+          } catch (error) {
+            console.error('An error occurred:', error);
+          }
         });
 
-
+        function populategraph() {
+          var dropdown = document.getElementById("students");
+          var itemId = dropdown.value;
+          try{
+          fetch('/login/Instructor/<%=course%>/data/${itemId}')
+            .then(response => response.json())
+            .then(data => {
+              const ctx = document.getElementById('myChart2').getContext('2d');
+              const chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                  labels: data.labels,
+                  datasets: [{
+                    label: 'Assignments',
+                    data: data.data,
+                    borderColor: 'rgb(255, 99, 132)',
+                    tension: 0.1
+                  }]
+                },
+                options: {}
+              });
+            })
+            .catch(error => console.error(error));
+          } catch (error) {
+            console.error('An error occurred:', error);
+          }
+        }
     </script>
   </body>
 </html>

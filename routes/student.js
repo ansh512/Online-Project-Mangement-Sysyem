@@ -1,5 +1,3 @@
-
-
 const express = require('express'),
     router = express.Router();
     multer = require('multer'),
@@ -26,6 +24,18 @@ const express = require('express'),
 
     const upload = multer({storage:storage});
 
+async function getStudentByStudentId(studentId) {
+  try {
+    // Find the student document based on the studentId
+    const student = await Student.findById(studentId);
+
+    return student;
+  } catch (error) {
+    console.log(error);
+    throw new Error('Error getting courses by student id');
+  }
+}
+
 async function getCoursesByStudentId(studentId) {
   try {
     // Find the student document based on the studentId
@@ -50,31 +60,41 @@ async function getCoursesByStudentId(studentId) {
 
 router.get('/', async (req, res) => {
   try {
+    const User = await getStudentByStudentId(req.session.userId);
     const courses = await getCoursesByStudentId(req.session.userId);
     if (!Array.isArray(courses)) {
       courses = [courses];
     }
 
-    res.render('sdashboard',{course: courses});
+    res.render('sdashboard',{user:User.email,course: courses});
   } catch (error) {
     console.log(error);
     res.status(500).send('Error getting courses');
   }
 });
 
-router.get('/:id',(req, res) => {
-  const courseId = req.params.id;
-      Assignment.find({ courseID: courseId })
-      .then((assignments) => {
-      if (!Array.isArray(assignments)) {
-        assignments = [assignments];
+router.get('/:id', async (req, res) => {
+  try {
+    const courseId = req.params.id;
+    const User = await getStudentByStudentId(req.session.userId);
+    let assignments = await Assignment.find({ courseID: courseId });
+    if (!Array.isArray(assignments)) {
+      assignments = [assignments];
+    }
+    const pending = [];
+    for (let i = 0; i < assignments.length; i++) {
+      const result = await Submissions.findOne({ assignmentID: assignments[i]._id });
+      if (!result) {
+        pending.push(assignments[i]);
       }
-    res.render('sassignments',{course:courseId,assignments: assignments});
-    })
-    .catch((error) => {
-      console.log(error);
-    })
+    }
+    res.render('sassignments', { user: User.email, course: courseId, assignments: pending });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send('Error getting assignments');
+  }
 });
+
 
 router.get("/:cid/download/:id", async (req, res) => {
   try {
@@ -113,6 +133,34 @@ router.post("/:cid/submit/:id", upload.single('file'),async (req, res) => {
     console.error(error);
   }
 });
+
+router.get("/:cid/submissions", async (req, res) => {
+  try {
+    const courseId = req.params.cid;
+    const User = await getStudentByStudentId(req.session.userId);
+    const assignments = await Submissions.find({ studentID: req.session.userId });
+    if (assignments.length === 0) {
+      assignments.push({ name: "NO SUBMISSIONS", grade: "😔" });
+    }
+
+    submitted = [];
+    for (let i = 0; i < assignments.length; i++) {
+      const result = await Assignment.findOne({ _id: assignments[i].assignmentID });
+      let submit = new Object();
+      submit.name = result.title;
+      submit.date = assignments[i].submissionDate < result.issuedDate ? "Submitted" : "Late Submission";
+      submit.grade = result.grade === null || result.grade === undefined ? "Not Graded" : result.grade;
+      submitted.push(submit);
+      console.log(result.grade);
+    }
+    console.log(submitted);
+    res.render("submission", { user: User.email, course: courseId, assignment: submitted });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error getting submissions');
+  }
+});
+
 
 module.exports = router;
 

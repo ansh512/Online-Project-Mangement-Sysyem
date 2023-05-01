@@ -3,142 +3,108 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Webpage with Header, Footer, Sidebar, and Main</title>
+    <title>Student</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/../public/styles.css">
 
-    <style>
-      html,
-      body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-
-      .grid-container {
-        display: grid;
-        grid-template-columns: 1fr 5fr;
-        grid-template-rows: 1fr 7fr 0.5fr;
-        height: 100%;
-      }
-
-      .header {
-        grid-column: 1 / span 2;
-        background-color: #004cff91;
-        color: white;
-        padding: 0.5rem;
-	   position:relative;
-	   align-items: center;
-      }
-
-      .sidebar {
-        grid-row: 2 / span 1;
-        background-color: #f8f9fa;;
-        padding: 1rem;
-      }
-
-      .main {
-        grid-row: 2 / span 1;
-        grid-column: 2 / span 1;
-        padding: 1rem;
-      }
-
-      .footer {
-        grid-column: 1 / span 2;
-        background-color: #004cff91;
-        color: white;
-        padding: 1rem;
-	   text-align: center;
-      }
-
-
-    form {
-      /* margin-top: 20px; */
-    }
-    .form-group label {
-      font-weight: bold;
-      margin-bottom: 5px;
-      text-transform: uppercase;
-    }
-    .form-control {
-      border-radius: 0;
-    }
-    .form-control:focus {
-      box-shadow: none;
-    }
-    .form-group small {
-      color: #6c757d;
-      font-size: 12px;
-    }
-
-    /* Style the file upload button */
-    .custom-file-label {
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
-    .custom-file-label::after {
-      content: "Browse";
-    }
-    .custom-file-input:focus ~ .custom-file-label {
-      border-color: #007bff;
-      box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-    }
-
-    /* Style the submit button */
-    button[type="submit"] {
-      background-color: #007bff;
-      border-color: #007bff;
-      text-transform: uppercase;
-      transition: all 0.2s ease-in-out;
-    }
-    button[type="submit"]:hover {
-      background-color: #0069d9;
-      border-color: #0062cc;
-    }
-
-    /* Style the sidebar */
-    #sidebar h3 {
-      font-size: 20px;
-      margin-bottom: 20px;
-      text-transform: uppercase;
-    }
-    #sidebar ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-    #sidebar li {
-      margin-bottom: 10px;
-    }
-    #sidebar a {
-      color: #343a40;
-      text-decoration: none;
-    }
-    #sidebar a:hover {
-      color: #007bff;
-    }
-
-    /*style the header*/
-    #headTitle{
-      position: absolute;
-      left: 0;
-      padding: 10px;
-    }
-    #headOptions{
-      position: absolute;
-      right: 0;
-      padding: 10px;
-    }
- .hidden {
-  display: none;
+<style>
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 0.8fr 5fr;
+  grid-template-rows: 1fr 7fr auto;
+  height: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  grid-column: 1 / span 2;
+  background-color: #004cffc7;
+  color: white;
+  padding: 0.5rem;
+  position:relative;
+  gap: 75rem;
+  border-radius: 10px;
+}
+
+.sidebar {
+  grid-row: 2 / span 1;
+  background-color: #f8f9fa;;
+  padding: 1rem;
+}
+
+.main {
+  grid-row: 2 / span 1;
+  grid-column: 2 / span 1;
+  padding: 1rem;
+}
+
+.footer {
+  grid-column: 1 / span 2;
+  background-color: #004cff91;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+}
+
+/* Style the file upload button */
+.custom-file-label {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.custom-file-label::after {
+  content: "Browse";
+}
+.custom-file-input:focus ~ .custom-file-label {
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Style the submit button */
+button[type="submit"] {
+  background-color: #007bff;
+  border-color: #007bff;
+  text-transform: uppercase;
+  transition: all 0.2s ease-in-out;
+}
+button[type="submit"]:hover {
+  background-color: #0069d9;
+  border-color: #0062cc;
+}
+
+.nav-item {
+  margin-bottom: 5px;
+}
+
+.nav-link {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: black;
+  background-color: #f7f7f7;
+  border-radius: 1rem;
+}
+
+.nav-link.active {
+  background-color: #007bff;
+  color: white;
+}
+
 
 .assignments {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: flex-start;
+  margin: 10px;
 }
 
 .assignment {
@@ -149,7 +115,7 @@
   border-radius: 10px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.645);
   background-color: #ffffff72;
-  margin: 0 1rem;
+  margin: 1rem 1rem;
 }
 
 .title {
@@ -178,124 +144,145 @@
   transform: translateY(-3px);
 }
 .popup {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.5);
-    z-index: 9999;
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 9999;
 }
 
 .popup-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
 }
 
 .close {
-    position: absolute;
-    top: 5px;
-    right: 10px;
-    font-size: 18px;
-    font-weight: bold;
-    color: #555;
-    cursor: pointer;
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #555;
+  cursor: pointer;
 }
-    </style>
-  </head>
+</style>
+
+</head>
   <body>
     <div class="grid-container">
       <div class="header">
-
-<img src="https://w7.pngwing.com/pngs/411/956/png-transparent-customer-login-avatar-head-portrait-client-user-thumbnail.png" alt="User" style="width:50px;height:50px;position:absolute;right:0;margin-right:20px;">
-      <h1 id = "headTitle">TU_Labs</h1>
-
-
+        <div><h1 id = "headTitle">TU_Labs</h1></div>
+        <div><select name = "user" style="border:none;box-shadow:none;" id="user-menu">
+          <option value="" disabled selected><%= user %></option>
+          <option value="/login/Student">My Courses</option>
+          <option value="/logout">Logout</option>
+        </select></div>
       </div>
       <div class="sidebar">
 
-      <h3>Options</h3>
       <ul class="nav flex-column">
         <li class="nav-item">
-          <a class="nav-link active" href="/login/Instructor/<%=course %>/grade">Submissions</a>
+          <a class="nav-link active" href="/login/Student/<%=course %>">Assignments</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/login/Instructor/<%=course %>">Post assignments</a>
+          <a class="nav-link" href="/login/Student/<%=course %>/submissions">My Submissions</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/login/Instructor/<%=course %>/reports">Reports</a>
+          <a class="nav-link" href="/login/Student/<%=course %>/reports">Reports</a>
         </li>
-
+       </ul> 
       </div>
-      <div class="main">
-
-        <h2><%= course %></h2>
-        <h3>Assignments</h3>
-            
-              <% assignments.forEach(assignment => { %>
-                <div class="assignment" onclick="showPopup('<%= assignment.title %>', '<%= new Date(assignment.submissionDate).toLocaleString('en-US',{ dateStyle: 'medium'}) %>' , '<%= assignment.issuedDate %>', '<%= assignment.points %>', '/login/Student/<%=course %>/download/<%= assignment._id%>')">
-                  <p class="title"><%= assignment.title %></p>
-                  <p class="submission-date">Submission Date: <%= new Date(assignment.submissionDate).toLocaleString('en-US', { dateStyle: 'medium' }) %></p>
-                  <a class="download-btn" href="/login/Student/<%=course %>/download/<%= assignment._id%>"> Download</a>
-                </div>
-                <!-- Popup box -->
-                <div id="popup" class="popup">
-                    <div class="popup-content">
-                      <span class="close" onclick="closePopup()">&times;</span>
-                      <p id="popup-title" class="title"></p><br>
-                      <p id="popup-submission-date" class="submission-date"></p><br>
-                      <p id="popup-issued-date" class="submission-date"></p><br>
-                      <p id="popup-points" class="submission-date"></p><br>
-                      <a id="popup-download-btn" class="download-btn">Download</a><br>
-                      <form action="/login/Student/<%=course %>/submit/<%= assignment._id%>" method="post" enctype="multipart/form-data">
-                        <label for="file">Upload your file:</label>
-                        <input type="file" id="file" name="file">
-                        <input type="submit" value="Submit">
-                      </form>
-                    </div>
-                  </div>
-              <% }); %>
-
+    <div class="main">
+      <h3>Assignments</h3>
+      <% assignments.forEach(assignment => { %>
+        <div class="assignment" onclick="showPopup('<%= assignment.title %>', '<%= new Date(assignment.submissionDate).toLocaleString('en-US',{ dateStyle: 'medium'}) %>' , '<%= assignment.issuedDate %>', '<%= assignment.points %>', '/login/Student/<%=course %>/download/<%= assignment._id%>')">
+          <p class="title"><%= assignment.title %></p>
+          <p class="submission-date">Submission Date: <%= new Date(assignment.submissionDate).toLocaleString('en-US', { dateStyle: 'medium' }) %></p>
+          <a class="download-btn" href="/login/Student/<%=course %>/download/<%= assignment._id%>"> Download</a>
+        </div>
+        <!-- Popup box -->
+        <div id="popup" class="popup">
+            <div class="popup-content">
+              <span class="close" onclick="closePopup()">&times;</span>
+              <p id="popup-title" class="title"></p><br>
+              <p id="popup-submission-date" class="submission-date"></p><br>
+              <p id="popup-issued-date" class="submission-date"></p><br>
+              <p id="popup-points" class="submission-date"></p><br>
+              <a id="popup-download-btn" class="download-btn">Download</a><br>
+              <form action="/login/Student/<%=course %>/submit/<%= assignment._id%>" method="post" enctype="multipart/form-data">
+                <label for="file">Upload your file:</label>
+                <input type="file" id="file" name="file">
+                <input type="submit" value="Submit">
+              </form>
+            </div>
+          </div>
+      <% }); %>
     </div>
       <div class="footer">
           <p>&copy; 2023 anubhavbinit</p>
       </div>
     </div>
 
-  <script>
-  function showPopup(title, submissionDate, issuedDate, points,downloadLink) {
-    // Set the values in the popup
-    document.getElementById("popup-title").innerHTML = title;
-    document.getElementById("popup-submission-date").innerHTML = "Submission Date: " + submissionDate;
-    document.getElementById("popup-issued-date").innerHTML = "Issued Date: " + issuedDate;
-    document.getElementById("popup-points").innerHTML = "Points: " + points;
-    document.getElementById("popup-download-btn").href = downloadLink;
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(function(navLink) {
+          navLink.addEventListener('click', function() {
+            navLinks.forEach(function(link) {
+              link.classList.remove('active');
+            });
+            this.classList.add('active');
+          });
+        });
+      });
 
-    // Show the popup
-    document.getElementById("popup").style.display = "block";
-  }
+      function showPopup(title, submissionDate, issuedDate, points,downloadLink) {
+        // Set the values in the popup
+        document.getElementById("popup-title").innerHTML = title;
+        document.getElementById("popup-submission-date").innerHTML = "Submission Date: " + submissionDate;
+        document.getElementById("popup-issued-date").innerHTML = "Issued Date: " + issuedDate;
+        document.getElementById("popup-points").innerHTML = "Points: " + points;
+        document.getElementById("popup-download-btn").href = downloadLink;
 
-  function closePopup() {
-    // Hide the popup
-    document.getElementById("popup").style.display = "none";
-  }
+        // Show the popup
+        document.getElementById("popup").style.display = "block";
+      }
 
-  </script>
+      function closePopup() {
+        // Hide the popup
+        document.getElementById("popup").style.display = "none";
+      }
+
+      function confirmLogout() {
+        if (confirm("Are you sure you want to log out?")) {
+          window.location.href = "/logout";
+        }
+      }
+
+      var userMenu = document.getElementById('user-menu');
+      userMenu.addEventListener('change', function() {
+        var selectedValue = this.value;
+        if (selectedValue == "/logout") {
+          confirmLogout();
+        }else{
+          window.location.href = selectedValue;
+        }
+      });
 
 
-\
-
-
-</body>
+    </script>
+  </body>
 </html>

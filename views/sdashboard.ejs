@@ -2,65 +2,68 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>CSS Grid Example</title>
-  <style>
-    /* Define a 2 column grid with a header, main, and footer */
-    body {
-      display: grid;
-      grid-template-rows: 1fr 6fr 0.5fr;
-      grid-template-columns: 1fr 3fr;
-      min-height: 100vh;
-      margin: 0;
-      padding: 0;
-    }
+  <title>Student</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+<style>
+
+/* Define a 2 column grid with a header, main, and footer */
+body {
+  display: grid;
+  grid-template-rows: 1fr 7fr auto;
+  grid-template-columns: 0.8fr 5fr;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
 
     /* Style the header */
-    header {
-      grid-row: 1;
-      grid-column: 1 / -1;
-      background-color: #004cff91;
-      color: white;
-      padding: 0.5rem;
-   position:relative;
-   align-items: center;
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  grid-column: 1 / span 2;
+  background-color: #004cffc7;
+  color: white;
+  padding: 0.5rem;
+  position:relative;
+  gap: 75rem;
+  border-radius: 10px;
+}
 
-    }
+/* Style the main section */
+main {
+  grid-row: 2;
+  grid-column: 1/span 2;
+  background-color: #f8f9fa;;
+  padding: 1rem;
+}
 
-    /* Style the main section */
-    main {
-      grid-row: 2;
-      grid-column: 1/span 2;
-      background-color: #f8f9fa;;
-      padding: 1rem;
-    }
+/* Style the footer */
+footer {
+  grid-column: 1 / span 2;
+  background-color: #004cff91;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+}
+/* Style the content in the main section */
+p {
+  margin-top: 0;
+  padding:10px;
+}
 
-    /* Style the footer */
-    footer {
-      grid-row: 3;
-      grid-column: 1 / -1;
-      background-color: #004cff91;
-      color: white;
-      padding: 1rem;
-      text-align: center;
-    }
+.headTitle{
+  position: absolute;
+  left: 0;
+  padding: 10px;
+}
 
-    /* Style the content in the main section */
-    p {
-      margin-top: 0;
-      padding:10px;
-    }
-
-    .headTitle{
-      position: absolute;
-      left: 0;
-      padding: 10px;
-    }
-
-    .flip-card {
-      display:inline-block;
-      padding: 1rem 1rem;
+.flip-card {
+  display:inline-block;
+  padding: 1rem 1rem;
   background-color: transparent;
-  width: 190px;
+  width: 300px;
   height: 254px;
   perspective: 1000px;
   font-family: sans-serif;
@@ -112,13 +115,20 @@
   color: white;
   transform: rotateY(180deg);
 }
-  </style>
+
+</style>
+
 </head>
 <body>
-  <header>
-    <img src="https://w7.pngwing.com/pngs/411/956/png-transparent-customer-login-avatar-head-portrait-client-user-thumbnail.png" alt="User" style="width:50px;height:50px;position:absolute;right:0;margin-right:20px;">
-    <h1 class = "headTitle">TU_Labs</h1>
-  </header>
+  <div class="header">
+    <div><h1 id = "headTitle">TU_Labs</h1></div>
+    <div><select name = "user" style="border:none;box-shadow:none;" id="user-menu">
+      <option value="" disabled selected><%= user %></option>
+      <option value="/login/Student">My Courses</option>
+      <option value="/logout">Logout</option>
+    </select></div>
+  </div>
+  <main>
   <% course.forEach(innerArr => {
     innerArr.forEach(c => { %>
       <a href="/login/Student/<%= c.courseID %>">
@@ -126,24 +136,36 @@
           <div class="flip-card-inner">
             <div class="flip-card-front">
               <p class="title"><%= c.name %></p>
-              <p>Hover</p>
             </div>
             <div class="flip-card-back">
               <p class="title"><%= c.name %></p>
               <p class="title"><%= c.courseID %></p>
               <p class="title"><%= c.instructor %></p>
-              <p>Leave Me</p>
             </div> 
           </div>
         </div>
       </a>
     <% }); 
   }); %>
-  
-  
   </main>
   <footer>
-    <p>Copyright &copy; 2023 anubhsvbinit</p>
+    <p>&copy; 2023 anubhavbinit</p>
   </footer>
+  <script>
+    var userMenu = document.getElementById('user-menu');
+    function confirmLogout() {
+        if (confirm("Are you sure you want to log out?")) {
+          window.location.href = "/logout";
+        }
+      }
+      userMenu.addEventListener('change', function() {
+        var selectedValue = this.value;
+        if (selectedValue == "/logout") {
+          confirmLogout();
+        }else{
+          window.location.href = selectedValue;
+        }
+      });
+  </script>
 </body>
 </html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+<style>
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 0.8fr 5fr;
+  grid-template-rows: 1fr 7fr auto;
+  height: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  grid-column: 1 / span 2;
+  background-color: #004cffc7;
+  color: white;
+  padding: 0.5rem;
+  position:relative;
+  gap: 75rem;
+  border-radius: 10px;
+}
+
+.sidebar {
+  grid-row: 2 / span 1;
+  background-color: #f8f9fa;;
+  padding: 1rem;
+}
+
+.main {
+  grid-row: 2 / span 1;
+  grid-column: 2 / span 1;
+  padding: 1rem;
+}
+
+.footer {
+  grid-column: 1 / span 2;
+  background-color: #004cff91;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+}
+.nav-item {
+  margin-bottom: 5px;
+}
+
+.nav-link {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: black;
+  background-color: #f7f7f7;
+  border-radius: 1rem;
+}
+
+.nav-link.active {
+  background-color: #007bff;
+  color: white;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.list-item {
+  padding: 5px;
+  border-bottom: 1px solid #ccc;
+}
+
+.list-item:last-child {
+  border-bottom: none;
+}
+
+.text-group > span:not(:last-child) {
+  margin-right: 25rem;
+}
+
+</style>
+
+</head>
+  <body>
+    <div class="grid-container">
+      <div class="header">
+        <div><h1 id = "headTitle">TU_Labs</h1></div>
+        <div><select name = "user" style="border:none;box-shadow:none;" id="user-menu">
+          <option value="" disabled selected><%= user %></option>
+          <option value="/login/Student">My Courses</option>
+          <option value="/logout">Logout</option>
+        </select></div>
+      </div>
+      <div class="sidebar">
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link" href="/login/Student/<%=course %>">Assignments</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="/login/Student/<%=course %>/submissions">My Submissions</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/login/Student/<%=course %>/reports">Reports</a>
+        </li>
+       </ul> 
+      </div>
+    <div class="main">
+        <div class="list">
+            <% assignment.forEach(a => { %>
+                <div class="list-item">
+                    <span class="text-group">
+                        <span><%=a.name%></span>
+                        <span><%=a.date%></span>
+                        <span><%=a.grade%></span>
+                    </span>
+                </div>
+            <% }); %>
+          </div>
+    </div>
+      <div class="footer">
+          <p>&copy; 2023 anubhavbinit</p>
+      </div>
+    </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var navLinks = document.querySelectorAll('.nav-link');
+      navLinks.forEach(function(navLink) {
+        navLink.addEventListener('click', function() {
+          navLinks.forEach(function(link) {
+            link.classList.remove('active');
+          });
+          this.classList.add('active');
+        });
+      });
+     });
+
+      function confirmLogout() {
+        if (confirm("Are you sure you want to log out?")) {
+          window.location.href = "/logout";
+        }
+      }
+
+      var userMenu = document.getElementById('user-menu');
+      userMenu.addEventListener('change', function() {
+        var selectedValue = this.value;
+        if (selectedValue == "/logout") {
+          confirmLogout();
+        }else{
+          window.location.href = selectedValue;
+        }
+      });
+
+
+    </script>
+  </body>
+</html>

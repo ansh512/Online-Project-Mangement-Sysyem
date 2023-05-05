@@ -4,7 +4,7 @@ const express = require('express'),
     bodyParser = require('body-parser'),
     Admin = require(__dirname + "/../user_model/user_model3.js"),
     Courses = require(__dirname + "/../user_model/user_model4.js"),
-    Student = require(__dirname + "/../user_model/user_model1.js"),
+    Student = require(__dirname + "/../user_model/user_model1.js"), 
     Instructor = require(__dirname + "/../user_model/user_model2.js"),
     Assignment = require(__dirname +"/../user_model/user_model5.js"),
     Submissions = require(__dirname + "/../user_model/user_model6.js"),
@@ -161,6 +161,11 @@ router.get("/:cid/submissions", async (req, res) => {
   }
 });
 
+// router.get("/:cid/reports", async(req, res) => {
+//   try{
+    
+//   }
+// })
 
 module.exports = router;
 

@@ -1,0 +1,70 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX_LINE_LENGTH 100
+#define MAX_DEFINES 10
+#define MAX_NAME_LENGTH 20
+#define MAX_VALUE_LENGTH 20
+
+// Define struct to store name-value pairs
+typedef struct {
+    char name[MAX_NAME_LENGTH];
+    char value[MAX_VALUE_LENGTH];
+} Define;
+
+// Global array to store defines
+Define defines[MAX_DEFINES];
+int numDefines = 0;
+
+// Function to read input file and replace macros
+void preprocessFile(char* filename) {
+    FILE* fp = fopen(filename, "r");
+    if (fp == NULL) {
+        printf("Error: cannot open input file %s\n", filename);
+        exit(1);
+    }
+
+    char line[MAX_LINE_LENGTH];
+    while (fgets(line, MAX_LINE_LENGTH, fp) != NULL) {
+        // Check if line starts with "#define"
+        if (strncmp(line, "#define", 7) == 0) {
+            // Parse name and value from line
+            char name[MAX_NAME_LENGTH];
+            char value[MAX_VALUE_LENGTH];
+            sscanf(line, "#define %s %s", name, value);
+            // Store name-value pair in defines array
+            Define define;
+            strncpy(define.name, name, MAX_NAME_LENGTH);
+            strncpy(define.value, value, MAX_VALUE_LENGTH);
+            defines[numDefines++] = define;
+        } else {
+            // Replace macros in line
+            for (int i = 0; i < numDefines; i++) {
+                char* name = defines[i].name;
+                char* value = defines[i].value;
+                char* pos = strstr(line, name);
+                while (pos != NULL) {
+                    // Replace macro with value
+                    memmove(pos + strlen(value), pos + strlen(name), strlen(pos + strlen(name)) + 1);
+                    memcpy(pos, value, strlen(value));
+                    // Check for another occurrence of macro in same line
+                    pos = strstr(line, name);
+                }
+            }
+            // Output modified line
+            printf("%s", line);
+        }
+    }
+
+    fclose(fp);
+}
+
+int main(int argc, char* argv[]) {
+    if (argc != 2) {
+        printf("Usage: %s <input_file>\n", argv[0]);
+        exit(1);
+    }
+    preprocessFile(argv[1]);
+    return 0;
+}

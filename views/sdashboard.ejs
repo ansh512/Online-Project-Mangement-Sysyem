@@ -9,25 +9,32 @@
 
 /* Define a 2 column grid with a header, main, and footer */
 body {
-  display: grid;
-  grid-template-rows: 1fr 7fr auto;
-  grid-template-columns: 0.8fr 5fr;
-  min-height: 100vh;
+  height: 100%;
   margin: 0;
   padding: 0;
+  width: 100%;
+  font-family: 'Open Sans', sans-serif;
+  background-color:  #E1E1E1 ;
 }
 
-    /* Style the header */
+/* grid definition */
+.grid-container {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 0.8fr 5fr;
+  grid-template-rows: 70px 1fr 50px;
+}
+
 .header {
   display: flex;
   justify-content: center;
   align-items: baseline;
   grid-column: 1 / span 2;
-  background-color: #004cffc7;
-  color: white;
+  background-color:  #F2F2F2  ;
+  color:  #1F1F1F ;
   padding: 0.5rem;
-  position:relative;
-  gap: 75rem;
+  position: relative;
+  gap: 72rem;
   border-radius: 10px;
 }
 
@@ -35,28 +42,18 @@ body {
 main {
   grid-row: 2;
   grid-column: 1/span 2;
-  background-color: #f8f9fa;;
   padding: 1rem;
+  margin:3px
 }
 
 /* Style the footer */
-footer {
+.footer {
   grid-column: 1 / span 2;
-  background-color: #004cff91;
-  color: white;
+  background-color:  #F2F2F2 ;
+  color: #1F1F1F;
   padding: 1rem;
   text-align: center;
-}
-/* Style the content in the main section */
-p {
-  margin-top: 0;
-  padding:10px;
-}
-
-.headTitle{
-  position: absolute;
-  left: 0;
-  padding: 10px;
+  margin:3px
 }
 
 .flip-card {
@@ -74,6 +71,8 @@ p {
   font-weight: 900;
   text-align: center;
   margin: 0;
+  margin-top: 0;
+  padding:10px;
 }
 
 .flip-card-inner {
@@ -99,19 +98,19 @@ p {
   height: 100%;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  border: 1px solid coral;
+  border: 1px solid gray;
   border-radius: 1rem;
 }
 
 .flip-card-front {
-  background: linear-gradient(120deg, bisque 60%, rgb(255, 231, 222) 88%,
-     rgb(255, 211, 195) 40%, rgba(255, 127, 80, 0.603) 48%);
-  color: coral;
+  background: linear-gradient(120deg, white 60%, rgb(231, 231, 231) 88%,
+     rgb(211, 211, 211) 40%, rgba(127, 127, 127, 0.603) 48%);
+  color: #046380;
 }
 
 .flip-card-back {
-  background: linear-gradient(120deg, rgb(255, 174, 145) 30%, coral 88%,
-     bisque 40%, rgb(255, 185, 160) 78%);
+  background: linear-gradient(120deg, rgb(174, 224, 224) 30%, #046380 88%,
+     lightgray 40%, rgb(185, 214, 214) 78%);
   color: white;
   transform: rotateY(180deg);
 }
@@ -120,37 +119,39 @@ p {
 
 </head>
 <body>
-  <div class="header">
-    <div><h1 id = "headTitle">TU_Labs</h1></div>
-    <div><select name = "user" style="border:none;box-shadow:none;" id="user-menu">
-      <option value="" disabled selected><%= user %></option>
-      <option value="/login/Student">My Courses</option>
-      <option value="/logout">Logout</option>
-    </select></div>
-  </div>
-  <main>
-  <% course.forEach(innerArr => {
-    innerArr.forEach(c => { %>
-      <a href="/login/Student/<%= c.courseID %>">
-        <div class="flip-card">
-          <div class="flip-card-inner">
-            <div class="flip-card-front">
-              <p class="title"><%= c.name %></p>
+  <div class="grid-container">
+    <div class="header">
+      <div><h3 id = "headTitle" style="font-weight: bold;">TU_Labs</h3></div>
+      <div><select name = "user" style="border:none;box-shadow:none;" id="user-menu">
+        <option value="" disabled selected><%= user %></option>
+        <option value="/login/Student">My Courses</option>
+        <option value="/logout">Logout</option>
+      </select></div>
+    </div>
+    <main>
+    <% course.forEach(innerArr => {
+      innerArr.forEach(c => { %>
+        <a href="/login/Student/<%= c.courseID %>">
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <p class="title"><%= c.name %></p>
+              </div>
+              <div class="flip-card-back">
+                <p class="title"><%= c.name %></p>
+                <p class="title"><%= c.courseID %></p>
+                <p class="title"><%= c.instructor %></p>
+              </div> 
             </div>
-            <div class="flip-card-back">
-              <p class="title"><%= c.name %></p>
-              <p class="title"><%= c.courseID %></p>
-              <p class="title"><%= c.instructor %></p>
-            </div> 
           </div>
-        </div>
-      </a>
-    <% }); 
-  }); %>
-  </main>
-  <footer>
-    <p>&copy; 2023 anubhavbinit</p>
-  </footer>
+        </a>
+      <% }); 
+    }); %>
+    </main>
+    <div class="footer">
+      <p>&copy; 2023 anubhavbinit</p>
+  </div>
+  </div>
   <script>
     var userMenu = document.getElementById('user-menu');
     function confirmLogout() {

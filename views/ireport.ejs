@@ -112,7 +112,10 @@
             <% }) %>
           </select>
         </div>
-        <canvas id="myChart2" style="width:100%;max-width:700px;height:200px; margin:20px">></canvas>
+        <div id="chart-container">
+          
+        </div>
+        
       </div>
 
       <div class="footer">
@@ -151,7 +154,7 @@
 
         document.addEventListener('DOMContentLoaded', () => {
           try {
-          fetch('/login/Instructor/<%=course%>/data')
+            fetch('/login/Instructor/<%=course%>/data')
             .then(response => response.json())
             .then(data => {
               const ctx = document.getElementById('myChart').getContext('2d');
@@ -162,45 +165,72 @@
                   datasets: [{
                     label: 'Assignments',
                     data: data.data,
+                    backgroundColor: 'rgb(255, 99, 13)',
                     borderColor: 'rgb(255, 99, 132)',
                     tension: 0.1
                   }]
                 },
-                options: {}
+                options: {
+                scales: {
+                    y: {
+                        suggestedMin: 0,
+                        suggestedMax: data.totalStudents,
+                        stepSize: 1
+                    }
+                }
+              }
               });
             })
             .catch(error => console.error(error));
+
           } catch (error) {
             console.error('An error occurred:', error);
           }
         });
 
         function populategraph() {
+          const datasetColors = {
+            "Submitted": 'rgb(54, 162, 235)',
+            "Late Submission": 'rgb(255, 99, 132)',
+            "Pending": 'rgb(255, 205, 86)'
+          };
           var dropdown = document.getElementById("students");
           var itemId = dropdown.value;
-          try{
-          fetch('/login/Instructor/<%=course%>/data/${itemId}')
+
+          fetch(`/login/Instructor/<%=course%>/data/${itemId}`)
             .then(response => response.json())
             .then(data => {
+              const chartContainer = document.getElementById('chart-container');
+              chartContainer.innerHTML = '<canvas id="myChart2" ></canvas>'; 
               const ctx = document.getElementById('myChart2').getContext('2d');
               const chart = new Chart(ctx, {
                 type: 'bar',
                 data: {
                   labels: data.labels,
                   datasets: [{
-                    label: 'Assignments',
+                    label: 'submsissions',
                     data: data.data,
+                    backgroundColor: [
+                      datasetColors["Submitted"],
+                      datasetColors["Late Submission"],
+                      datasetColors["Pending"]
+                    ],
                     borderColor: 'rgb(255, 99, 132)',
                     tension: 0.1
                   }]
                 },
-                options: {}
+                options: {
+                  scales: {
+                    y: {
+                        suggestedMin: 0,
+                        suggestedMax: data.totalAssignments,
+                        stepSize: 1
+                    }
+                }
+                }
               });
             })
             .catch(error => console.error(error));
-          } catch (error) {
-            console.error('An error occurred:', error);
-          }
         }
     </script>
   </body>

@@ -11,26 +11,27 @@ body {
   margin: 0;
   padding: 0;
   width: 100%;
+  font-family: 'Open Sans', sans-serif;
+  background-color:  #E1E1E1 ;
 }
 
-/*grid defination */
+/* grid definition */
 .grid-container {
   min-height: 100vh;
   display: grid;
   grid-template-columns: 0.8fr 5fr;
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows: 70px 1fr 50px;
 }
 
-    /* Style the header */
 .header {
   display: flex;
   justify-content: center;
   align-items: baseline;
   grid-column: 1 / span 2;
-  background-color: #004cffc7;
-  color: white;
+  background-color:  #F2F2F2  ;
+  color:  #1F1F1F ;
   padding: 0.5rem;
-  position:relative;
+  position: relative;
   gap: 75rem;
   border-radius: 10px;
 }
@@ -39,29 +40,18 @@ body {
 main {
   grid-row: 2;
   grid-column: 1/span 2;
-  background-color: #f8f9fa;;
   padding: 1rem;
+  margin:3px
 }
 
 /* Style the footer */
-footer {
+.footer {
   grid-column: 1 / span 2;
-  background-color: rgba(79, 112, 171, 0.569);
-  color: white;
+  background-color:  #F2F2F2 ;
+  color: #1F1F1F;
   padding: 1rem;
   text-align: center;
-}
-
-/* Style the content in the main section */
-p {
-  margin-top: 0;
-  padding:10px;
-}
-
-.headTitle{
-  position: absolute;
-  left: 0;
-  padding: 10px;
+  margin:3px
 }
 
 .flip-card {
@@ -79,6 +69,8 @@ p {
   font-weight: 900;
   text-align: center;
   margin: 0;
+  margin-top: 0;
+  padding:10px;
 }
 
 .flip-card-inner {
@@ -104,19 +96,19 @@ p {
   height: 100%;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  border: 1px solid coral;
+  border: 1px solid gray;
   border-radius: 1rem;
 }
 
 .flip-card-front {
-  background: linear-gradient(120deg, bisque 60%, rgb(255, 231, 222) 88%,
-     rgb(255, 211, 195) 40%, rgba(255, 127, 80, 0.603) 48%);
-  color: coral;
+  background: linear-gradient(120deg, white 60%, rgb(231, 231, 231) 88%,
+     rgb(211, 211, 211) 40%, rgba(127, 127, 127, 0.603) 48%);
+  color: #046380;
 }
 
 .flip-card-back {
-  background: linear-gradient(120deg, rgb(255, 174, 145) 30%, coral 88%,
-     bisque 40%, rgb(255, 185, 160) 78%);
+  background: linear-gradient(120deg, rgb(174, 224, 224) 30%, #046380 88%,
+     lightgray 40%, rgb(185, 214, 214) 78%);
   color: white;
   transform: rotateY(180deg);
 }
@@ -150,9 +142,9 @@ p {
         </a>
       <% }); %>
     </main>
-    <footer>
-      <p>Copyright &copy; 2023 anubhsvbinit</p>
-    </footer>
+    <div class="footer">
+      <p>&copy; 2023 anubhavbinit</p>
+  </div>
   </div>
 </body>
 </html>

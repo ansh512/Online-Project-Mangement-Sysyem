@@ -5,96 +5,151 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Instructor</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://kit.fontawesome.com/e1942af5f1.js" crossorigin="anonymous"></script>
     <style>
-      body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-        width: 100%;
-      }
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  font-family: 'Open Sans', sans-serif;
+  background-color:  #E1E1E1 ;
+}
 
-      /*grid defination */
-      .grid-container {
-        min-height: 100vh;
-        display: grid;
-        grid-template-columns: 0.8fr 5fr;
-        grid-template-rows: auto 1fr auto;
-      }
-      .header {
-        display: flex;
-        justify-content: center;
-        align-items: baseline;
-        grid-column: 1 / span 2;
-        background-color: #004cffc7;
-        color: white;
-        padding: 0.5rem;
-        position:relative;
-        gap: 75rem;
-        border-radius: 10px;
-      }
-      .sidebar {
-        grid-row: 2 / span 1;
-        background-color: #f8f9fa20;
-        padding: 1rem;
-      }
-      .main {
-        grid-row: 2 / span 1;
-        grid-column: 2 / span 1;
-        padding: 1rem;
-      }
-      .footer {
-        grid-column: 1 / span 2;
-        background-color: rgba(79, 112, 171, 0.569);
-        color: white;
-        padding: 1rem;
-        text-align: center;
-      }
+/* grid definition */
+.grid-container {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 0.8fr 5fr;
+  grid-template-rows: 60px 1fr 50px;
+}
 
-    /* style for form element */
-      .form-group label {
-        font-weight: bold;
-        margin-bottom: 5px;
-        text-transform: uppercase;
-      }
-      .form-control {
-        border-radius: 0;
-      }
-      .form-control:focus {
-        box-shadow: none;
-      }
-      .form-group small {
-        color: #6c757d;
-        font-size: 12px;
-      }
-      /* Style the submit button */
-      button[type="submit"] {
-        background-color: #007bff;
-        border-color: #007bff;
-        text-transform: uppercase;
-        transition: all 0.2s ease-in-out;
-      }
-      button[type="submit"]:hover {
-        background-color: #0069d9;
-        border-color: #0062cc;
-      }
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  grid-column: 1 / span 2;
+  background-color:  #F2F2F2  ;
+  color:  #1F1F1F ;
+  padding: 0.5rem;
+  position: relative;
+  gap: 72rem;
+  border-radius: 10px;
+}
 
-      /* sidebar style */
-      .nav-item {
-        margin-bottom: 10px;
-      }
-      .nav-link {
-        display: block;
-        width: 80%;
-        padding: 10px;
-        text-decoration: none;
-        color: black;
-        background-color: #f7f7f7;
-        border-radius: 1rem;
-      }
-      .nav-link.active {
-        background-color: #007bff;
-        color: white;
-      }
+.sidebar {
+  grid-row: 2 / span 1;
+  background-color: #FFFFFF ;
+  padding: 1rem;
+  margin:5px
+}
+
+.main {
+  grid-row: 2 / span 1;
+  grid-column: 2 / span 1;
+  padding: 0.5rem 1rem;
+}
+
+.footer {
+  grid-column: 1 / span 2;
+  background-color:  #F2F2F2 ;
+  color: #1F1F1F;
+  padding: 1rem;
+  text-align: center;
+  margin:3px
+}
+
+.subheader{
+  background-color: #F8F8F8 ;
+  color: #1F1F1F;
+  padding: 0.5rem;
+  display: block;
+  border-radius: 5px;
+  margin: 3px 3px 7px 3px ;
+}
+
+/* style for form element */
+form {
+  background-color: #FFFFFF;
+  padding: 20px;
+  border-radius: 10px;
+}
+.form-group label {
+  font-weight: normal;
+  margin-bottom: 5px;
+}
+.form-control {
+  border-radius: 0;
+}
+.form-control:focus {
+  box-shadow: none;
+}
+.form-group small {
+  color: #6c757d;
+  font-size: 12px;
+}
+/* Style the submit button */
+button[type="submit"] {
+  background-color: #046380;
+  border-color: #046380;
+  text-transform: uppercase;
+  transition: all 0.2s ease-in-out;
+}
+button[type="submit"]:hover {
+  background-color: #2c3e50;
+  border-color: #2c3e50;
+}
+button[type="reset"] {
+  background-color: #2c3e50;
+  border-color: #2c3e50;
+  text-transform: uppercase;
+  transition: all 0.2s ease-in-out;
+}
+button[type="reset"]:hover {
+  background-color: #046380;
+  border-color: #046380;
+}
+
+.sidebar .nav-item a,
+.sidebar .nav-item a::after,
+.sidebar .nav-item a::before {
+  box-sizing: content-box;
+}
+.nav-item {
+  margin-bottom: 10px;
+}
+
+.nav-link {
+  display: block;
+  width: 80%;
+  padding: 10px;
+  text-decoration: none;
+  color: white;
+  background-color: #2c3e50;
+  border-radius: 1rem;
+}
+.nav-link.active {
+  background-color: #046380;
+  color: white;
+}
+i {
+  margin-right: 5px;
+}
+/* alert message */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 9999;
+  display: none;
+}
+.alert-success {
+  z-index: 10000;
+}
+
 
     </style>
   </head>
@@ -103,7 +158,7 @@
     <div class="grid-container">
 
       <div class="header">
-        <div><h1 id = "headTitle">TU_Labs</h1></div>
+        <div><h3 id = "headTitle" style="font-weight: bold;">TU_Labs</h3></div>
         <div><select name = "user" style="border:none;box-shadow:none;" id="user-menu">
           <option value="" disabled selected><%= user %></option>
           <option value="/login/Instructor">My Courses</option>
@@ -115,45 +170,72 @@
         <p><%=course%></p>
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a class="nav-link active" href="/login/Instructor/<%=course %>">Post</a>
+            <a class="nav-link active" href="/login/Instructor/<%=course %>">
+              <i class="fa-solid fa-file-arrow-up"></i> Post
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/login/Instructor/<%=course %>/grade">Submissions</a>
+            <a class="nav-link" href="/login/Instructor/<%=course %>/grade">
+              <i class="fa-solid fa-check"></i> Grade
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/login/Instructor/<%=course %>/report">Reports</a>
+            <a class="nav-link" href="/login/Instructor/<%=course %>/report">
+              <i class="fa-solid fa-square-poll-vertical"></i> Reports
+            </a>
           </li>
         </ul>
       </div>
 
       <div class="main">
-        <h3>Post Assignments</h3>
+        <div class = "subheader"><h3 >Post Assignments</h3></div>
+
+        <!-- Overlay to disable the window -->
+        <div class="overlay"></div>
+
+        <!-- Alert message -->
+        <div class="alert alert-success alert-dismissible fade show" role="alert" style="display:none;">
+          Form submitted successfully.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+                
         <form action="/login/Instructor/<%=course %>/assignment" method="post" enctype="multipart/form-data" onsubmit="showAlert()">
-          <div class="form-group">
-            <label for="field1">Course ID</label>
-            <input required = "" type="text" class="form-control" name="courseID" value=<%= course %> readonly>
+          <div class="form-row">
+            <div class="form-group col">
+              <label for="field1">Course ID</label>
+              <input required="" type="text" class="form-control" name="courseID" value=<%= course %> readonly>
+            </div>
+            <div class="form-group col">
+              <label for="field2">Assignment Title</label>
+              <input required="" type="text" class="form-control" name="title" placeholder="Enter field 2">
+            </div>
           </div>
           <div class="form-group">
-            <label for="field2">Title</label>
-            <input required = "" type="text" class="form-control" name="title" placeholder="Enter field 2">
+            <label for="field3">Assignment Description</label>
+            <textarea class="form-control" name="description" rows="5" cols="50"></textarea>
+          </div>
+          <div class="form-row">
+            <div class="form-group col">
+              <label for="field4">Submission Date</label>
+              <input required="" type="date" class="form-control" name="submissionDate" placeholder="Enter field 4">
+            </div>
+            <div class="form-group col">
+              <label for="field5">Assignmnet Marks</label>
+              <input required="" type="number" class="form-control" name="points" placeholder="Enter field 5">
+            </div>
           </div>
           <div class="form-group">
-            <label for="field3">Submission Date</label>
-            <input required = "" type="Date" class="form-control" name="submissionDate" placeholder="Enter field 3">
-          </div>
-          <div class="form-group">
-            <label for="field3">Max-Points</label>
-            <input required = "" type="number" class="form-control" name="points" placeholder="Enter field 3">
-          </div>
-          <div class="form-group">
-            <label for="pdf">Upload assignment:</label><br>
-            <input required = "" type="file" class="form-control" name="pdf"><br>
+            <label for="pdf">Assignment File (if any):</label><br>
+            <input type="file" class="form-control" name="pdf"><br>
           </div>
           <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="reset" class="btn btn-secondary">Reset</button>
         </form>
-      </div>
 
-      <hr style="height:2px;border-width:0;color:gray;background-color:gray"/>
+      </div>
+      
       <div class="footer">
           <p>&copy; 2023 anubhavbinit</p>
       </div>
@@ -161,6 +243,7 @@
     </div>
 
     <script>
+    
       document.addEventListener('DOMContentLoaded', function() {
           var navLinks = document.querySelectorAll('.nav-link');
           navLinks.forEach(function(navLink) {
@@ -188,13 +271,30 @@
           }
         });
 
-        const form = document.querySelector('form');
-        form.addEventListener('submit', (event) => {
-          event.preventDefault(); // Prevent the default form submission
-          // Perform any additional validation or processing here
-          alert('Form posted successfully'); // Show the success message in an alert
-          form.submit(); // Submit the form normally
+      // Wait for the document to load
+      document.addEventListener("DOMContentLoaded", function() {
+      var form = document.querySelector('form');
+      var overlay = document.querySelector('.overlay');
+      var alertMessage = document.querySelector('.alert-success');
+      var closeButton = alertMessage.querySelector('.close');
+
+      form.addEventListener('submit', function(event) {
+        event.preventDefault(); // prevent the form from submitting normally
+
+        // Disable the window with an overlay
+        overlay.style.display = 'block';
+
+        // Show the alert message
+        alertMessage.style.display = 'block';
+
+        // Hide the overlay and submit the form data to the backend when the alert is closed
+        closeButton.addEventListener('click', function() {
+          alertMessage.style.display = 'none';
+          overlay.style.display = 'none';
+          form.submit(); // submit the form data to the backend
         });
+      });
+    });
 
 
     </script>

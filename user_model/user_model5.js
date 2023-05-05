@@ -11,9 +11,12 @@ const assignmentSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  description: {
+    type: String,
+    text: true,
+  },
   path: {
     type: String,
-    required: true,
   },
   issuedDate: {
     type: String,
@@ -25,7 +28,7 @@ const assignmentSchema = new mongoose.Schema({
   },
   points: {
     type:  Number,
-    required: true,
+    default: 100,
   }
 });
 

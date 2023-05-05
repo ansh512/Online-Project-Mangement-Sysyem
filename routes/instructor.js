@@ -9,8 +9,10 @@ const Submissions = require(__dirname + "/../user_model/user_model6.js");
 const Assignment = require(__dirname + "/../user_model/user_model5.js");
 const Announcements = require(__dirname + "/../user_model/user_model5.js");
 const session = require('express-session');
+const mongoose = require('mongoose');
 
 router.use(bodyParser.urlencoded({ extended: true }));
+router.use(express.static(__dirname + '/public'));
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -114,25 +116,30 @@ router.get('/:id/grade', async (req, res) => {
 router.post('/:id/assignment', upload.single('pdf'), async (req, res) => {
   const courseID = req.body.courseID;
   const title = req.body.title;
+  const description = req.body.description;
   const currDate = new Date();
   const date = req.body.submissionDate;
   const points = req.body.points;
-
   try {
     const newAssignment = new Assignment({
       courseID: courseID,
       title: title,
-      path: req.file.path,
+      description: description,
       issuedDate: currDate.toLocaleDateString(),
       submissionDate: date,
       points: points
     });
+    if (req.file) {
+      newAssignment.path = req.file.path;
+    }
     const result = await newAssignment.save();
     res.redirect('/login/Instructor/'+ req.params.id);
   } catch (error) {
     console.error(error);
+    res.status(500).send('Server error');
   }
 });
+
 
 // download submitted assignment
 router.get("/:cid/download/:sid", async (req, res) => {
@@ -194,6 +201,7 @@ router.get('/:cid/data', async (req, res) => {
   try {
     const courseId = req.params.cid;
     const assignments = await Assignment.find({ courseID: courseId });
+    const students = await Student.find({ courses: { $in: [courseId] } });
     
     const submissionData = [];
     for (const assignment of assignments) {
@@ -205,9 +213,9 @@ router.get('/:cid/data', async (req, res) => {
 
     const data = {
       labels: labels,
-      data: submissionData
+      data: submissionData,
+      totalStudents:students.length
     };
-
     res.json(data);
   } catch (error) {
     console.log(error);
@@ -218,27 +226,24 @@ router.get('/:cid/data', async (req, res) => {
 router.get('/:cid/data/:id', async (req, res) => {
   try {
     const courseId = req.params.cid;
-    console.log(courseId);
+    const itemId = req.params.id;
     const assignments = await Assignment.find({ courseID: courseId });
-    
-    let submissionData = new Array(3);
+
+    let submissionData = [0, 0, 0];
     for (const assignment of assignments) {
-      const submissions = await Submissions.findOne({studentID: req.params.id});
-      if(submissions.submissionDate <= assignments.submissionDate){
-        submissionData[0]++;
-      }else if(submissions.submissionDate > assignments.submissionDate){
-        submissionData[1]++;
-      }else{
+      const submission = await Submissions.findOne({ studentID: itemId, assignmentID: assignment._id });
+      if (submission) {
+        if (submission.submissionDate <= assignment.submissionDate) {
+          submissionData[0]++;
+        } else {
+          submissionData[1]++;
+        }
+      } else {
         submissionData[2]++;
       }
     }
-    const labels = ["submitted","late submission","pending"];
-    const data = {
-      labels: labels,
-      data: submissionData
-    };
-    console.log(data);
-    res.json(data);
+    const labels = ["Submitted", "Late Submission", "Pending"];
+    res.json({ labels: labels, data: submissionData, totalAssignments: assignments.length });
   } catch (error) {
     console.log(error);
     res.status(500).send('Internal server error');

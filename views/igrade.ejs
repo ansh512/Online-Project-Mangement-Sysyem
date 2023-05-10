@@ -69,6 +69,7 @@ body {
 }
 .submain{
   background-color: #F8F8F8;
+  padding: 10px;
 }
 
 /*style for sidebar */
@@ -109,58 +110,55 @@ button[type="submit"]:hover {
   border-color: #2c3e50;
 }
 /*style for the list */
-.dropdown-container {
+.container {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  margin-bottom: 15px;
 }
-.dropdown {
+
+.title {
+  font-weight: bold;
+  cursor: pointer;
+  background-color: #f2f2f2ad ;
+  padding: 10px;
   position: relative;
-}
-.dropdown-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #F8F8F8;
-  padding: 10px;
-  cursor: pointer;
-  border: 1px solid #ccc;
-}
-.dropdown-header:hover {
-  background-color: #f8f8f8cc;
-}
-.dropdown-menu {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background-color: hwb(0 95% 5%);
-  padding: 10px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-  max-height: 0;
-  overflow: hidden;
-  width: 100%;
-  transition: max-height 0.3s ease-out;
 }
-.dropdown-menu li {
-  padding: 5px 0;
-  cursor: pointer;
-}
-.dropdown-menu li:hover {
-  background-color: #eeeeee09;
-}
-.arrow {
+
+.title::after {
+  content: "";
+  display: block;
   width: 0;
   height: 0;
   border-style: solid;
   border-width: 5px 5px 0 5px;
   border-color: #555 transparent transparent transparent;
-  margin-left: 10px;
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+}
+
+.content {
+  display: none;
+  padding-left: 20px;
+  margin-top: 15px;
+}
+
+.title.active {
+  font-weight: bold;
+}
+
+.content.active {
+  display: block;
+}
+
+ul {
+  list-style: none;
 }
 li {
   display: flex;
-  gap:8rem;
-  align-items: center;
+  justify-content: space-between;
 }
 li span {
   margin-right: 10px;
@@ -189,6 +187,11 @@ li span {
             </a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="/login/Instructor/<%=course %>/announcement">
+              <i class="fa-solid fa-file-arrow-up"></i> Announcement
+            </a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link active" href="/login/Instructor/<%=course %>/grade">
               <i class="fa-solid fa-check"></i> Grade
             </a>
@@ -203,31 +206,30 @@ li span {
 
       <div class="main">
         <div class = "subheader"><h3 >Grade Assignment</h3></div>
-        <% for (let i = 0; i < assignment.length; i++) { %>
-          <div class="dropdown-container">
-            <div class="dropdown">
-              <div class="dropdown-header">
-                <span><%= assignment[i].title %></span>
-                <div class="arrow"></div>
+        <div class = "submain">
+          <% for (let i = 0; i < assignment.length; i++) { %>
+            <div class="container">
+              <div class="title" data-array="<%=assignment[i]._id%>"><%= assignment[i].title %></div>
+              <div class="content" data-array="<%=assignment[i]._id%>">
+                <ul>
+                  <% for (let j = 0; j < submission[i].length; j++) { %>
+                    <li><span><%= submission[i][j].RollNo %></span>
+                      <span><a href="/login/Instructor/<%=course %>/download/<%= submission[i][j]._id%>">Submission</a></span>
+                      <p><span id="grade-<%= submission[i][j]._id%>"><%=submission[i][j].grade%></span>/ <%=assignment[i].points%></p>
+                      <span><%=submission[i][j].type %></span>
+                      <span>
+                       <form action="/login/Instructor/<%=course %>/submit/<%= submission[i][j]._id%>" id="my-form-<%= submission[i][j]._id%>">
+                         <input id="grade-input" name = "grade" type = "number" value="<%=submission[i][j].grade%>">
+                         <button type="submit" class="btn btn-primary btn-sm submit-button">submit</button>
+                       </form>
+                     </span>
+                     </li>
+                  <% } %>
+                </ul>
               </div>
-              <ul class="dropdown-menu">
-                <% for (let j = 0; j < submission[i].length; j++) { %>
-                  <li><span><%= submission[i][j].RollNo %></span>
-                 <span><a href="/login/Instructor/<%=course %>/download/<%= submission[i][j]._id%>"> Download</a></span>
-                 <span>Max-point: <%=assignment[i].points%></span>
-                 <span><%=submission[i][j].type %></span>
-                 <span>
-                  <form action="/login/Instructor/<%=course %>/submit/<%= submission[i][j]._id%>" method="post">
-                    <input name = "grade" type = "number" value="<%=submission[i][j].grade%>">
-                    <button type="submit" class="btn btn-primary btn-sm">submit</button>
-                  </form>
-                </span>
-                </li>
-                <% } %>
-              </ul>
             </div>
-          </div>
-        <% } %>
+          <% } %>
+        </div>
       </div>
 
       <div class="footer">
@@ -265,49 +267,61 @@ li span {
             window.location.href = selectedValue;
           }
         });
-      /*assignemnt list control */
-      var dropdowns = document.querySelectorAll('.dropdown');
-      dropdowns.forEach(function(dropdown) {
-        var header = dropdown.querySelector('.dropdown-header');
-        var menu = dropdown.querySelector('.dropdown-menu');
-        
-        header.addEventListener('click', function() {
-          if (menu.style.maxHeight) {
-              menu.style.display = "none";
-              menu.style.maxHeight = null;
-          } else {
-            // close all other dropdown menus
-            dropdowns.forEach(function(otherDropdown) {
-              if (otherDropdown != dropdown) {
-                var otherMenu = otherDropdown.querySelector('.dropdown-menu');
-                otherMenu.style.display = "none";
-                otherMenu.style.maxHeight = null;
 
-              }
-            });
-            // open this dropdown menu
-            menu.style.display = "block";
-            menu.style.maxHeight = menu.scrollHeight + 'px';
-          }
+        const titles = document.querySelectorAll('.title');
+        titles.forEach(title => {
+          title.addEventListener('click', () => {
+            const array = title.dataset.array;
+            const content = document.querySelector(`.content[data-array="${array}"]`);
+            title.classList.toggle('active');
+            content.classList.toggle('active');
+          });
         });
+
+document.addEventListener("DOMContentLoaded", function() {
+  const submitButtons = document.querySelectorAll('.submit-button');
+submitButtons.forEach(button => {
+  button.addEventListener('click', function(event) {
+    event.preventDefault();
+
+    // Get the closest form element using the 'closest' method
+    const form = this.closest('form');
+
+    if (form) {
+      // Get the grade input within the form using 'querySelector'
+      const gradeInput = form.querySelector("#grade-input");
+      const grade = gradeInput.value;
+
+      fetch(form.action, {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ grade })
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        // update relevant parts of page with new data
+        const id = form.id.split('-')[2];
+        document.getElementById('grade-' + id).innerHTML = data.grade;
+      })
+      .catch(error => {
+        console.error("There was an error:", error);
       });
+    } else {
+      // Form not found
+      console.log('Form not found');
+    }
+  });
+});
 
-      // const form = document.querySelector('form');
+});
 
-      // form.addEventListener('submit', async (event) => {
-      //   event.preventDefault();
-      //   const formData = new FormData(form);
-
-      //   try {
-      //     const response = await fetch('/login/Instructor/' + course + '/submit/'+ submissionID, {
-      //       method: 'POST',
-      //       body: formData,
-      //     });
-      //     } catch (error) {
-      //     console.error(error);
-      //     alert('An error occurred while submitting the form');
-      //     }
-      //   });
 
     </script>
 

@@ -6,69 +6,93 @@
     <title>Instructor</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://kit.fontawesome.com/e1942af5f1.js" crossorigin="anonymous"></script>
     <style>
-      body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-        width: 100%;
-      }
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  font-family: 'Open Sans', sans-serif;
+  background-color:  #E1E1E1 ;
+}
+/* grid definition */
+.grid-container {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 0.8fr 5fr;
+  grid-template-rows: 60px 1fr 50px;
+}
 
-      /*grid defination */
-      .grid-container {
-        min-height: 100vh;
-        display: grid;
-        grid-template-columns: 0.8fr 5fr;
-        grid-template-rows: auto 1fr auto;
-      }
-      .header {
-        display: flex;
-        justify-content: center;
-        align-items: baseline;
-        grid-column: 1 / span 2;
-        background-color: #004cffc7;
-        color: white;
-        padding: 0.5rem;
-        position:relative;
-        gap: 75rem;
-        border-radius: 10px;
-      }
-      .sidebar {
-        grid-row: 2 / span 1;
-        background-color: #f8f9fa20;
-        padding: 1rem;
-      }
-      .main {
-        grid-row: 2 / span 1;
-        grid-column: 2 / span 1;
-        padding: 1rem;
-      }
-      .footer {
-        grid-column: 1 / span 2;
-        background-color: rgba(79, 112, 171, 0.569);
-        color: white;
-        padding: 1rem;
-        text-align: center;
-      }
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  grid-column: 1 / span 2;
+  background-color:  #F2F2F2  ;
+  color:  #1F1F1F ;
+  padding: 0.5rem;
+  position: relative;
+  gap: 72rem;
+  border-radius: 10px;
+}
 
-      /* sidebar style */
-      .nav-item {
-        margin-bottom: 10px;
-      }
-      .nav-link {
-        display: block;
-        width: 80%;
-        padding: 10px;
-        text-decoration: none;
-        color: black;
-        background-color: #f7f7f7;
-        border-radius: 1rem;
-      }
-      .nav-link.active {
-        background-color: #007bff;
-        color: white;
-      }
+.sidebar {
+  grid-row: 2 / span 1;
+  background-color: #FFFFFF ;
+  padding: 1rem;
+  margin:5px
+}
 
+.main {
+  grid-row: 2 / span 1;
+  grid-column: 2 / span 1;
+  padding: 0.5rem 1rem;
+}
+
+.footer {
+  grid-column: 1 / span 2;
+  background-color:  #F2F2F2 ;
+  color: #1F1F1F;
+  padding: 1rem;
+  text-align: center;
+  margin:3px
+}
+
+.subheader{
+  background-color: #F8F8F8 ;
+  color: #1F1F1F;
+  padding: 0.5rem;
+  display: block;
+  border-radius: 5px;
+  margin: 3px 3px 7px 3px ;
+}
+
+/* sidebar style */
+.sidebar .nav-item a,
+.sidebar .nav-item a::after,
+.sidebar .nav-item a::before {
+  box-sizing: content-box;
+}
+.nav-item {
+  margin-bottom: 10px;
+}
+.nav-link {
+  display: block;
+  width: 80%;
+  padding: 10px;
+  text-decoration: none;
+  color: white;
+  background-color: #2c3e50;
+  border-radius: 1rem;
+}
+.nav-link.active {
+  background-color: #046380;
+  color: white;
+}
+i {
+  margin-right: 5px;
+}
     </style>
   </head>
 
@@ -76,7 +100,7 @@
     <div class="grid-container">
 
       <div class="header">
-        <div><h1 id = "headTitle">TU_Labs</h1></div>
+        <div><h3 id = "headTitle" style="font-weight: bold;">TU_Labs</h3></div>
         <div><select name = "user" style="border:none;box-shadow:none;" id="user-menu">
           <option value="" disabled selected><%= user %></option>
           <option value="/login/Instructor">My Courses</option>
@@ -88,33 +112,55 @@
         <p><%=course%></p>
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a class="nav-link" href="/login/Instructor/<%=course %>">Post</a>
+            <a class="nav-link" href="/login/Instructor/<%=course %>">
+              <i class="fa-solid fa-file-arrow-up"></i> Post
+            </a>
+          </li>
+          <li class="nav-item" style="margin-bottom: -15px;">
+            <a class="nav-link" href="/login/Instructor/<%=course %>/announcement">
+              <i class="fa-solid fa-file-arrow-up"></i> Announcement
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/login/Instructor/<%=course %>/grade">Submissions</a>
+            <a class="nav-link" href="/login/Instructor/<%=course %>/grade">
+              <i class="fa-solid fa-check"></i> Grade
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="/login/Instructor/<%=course %>/report">Reports</a>
+            <a class="nav-link active" href="/login/Instructor/<%=course %>/report">
+              <i class="fa-solid fa-square-poll-vertical"></i> Reports
+            </a>
           </li>
         </ul>
       </div>
 
       <div class="main">
-        <span>TOTAL STUDENT: <%=totalStudent%></span>
-        <span style="margin-left: 50px;">TOTAL Assignments: <%=totalAssignment%></span>
+        <div class="subheader">
+          <p>
+            <h3 style="display: inline;">Student Report</h3>
+            <span style="display: inline; margin-left: 40rem;">TOTAL STUDENT: <%= totalStudent %></span>
+            <span style="display: inline; margin-left: 5rem;">TOTAL Assignments: <%= totalAssignment %></span>
+          </p>
+        </div>        
 
-        <canvas id="myChart" style="width:100%;max-width:700px;height:200px; margin:20px">></canvas>
-        <div>
-          <select id="students" name="students" onchange="populategraph()">
-            <option value="">Select student</option>
-            <% students.forEach(function(student) { %>
-              <option value="<%= student._id %>"><%= student.roll %></option>
-            <% }) %>
-          </select>
+        <div style="display: flex; justify-content: center;">
+          <canvas id="myChart" style="flex: 0 0 auto; width: 100%; max-width: 700px; height: 200px; margin: 20px;"></canvas>
         </div>
-        <div id="chart-container">
-          
-        </div>
+        
+        <div class="subheader">
+          <p style="margin: 3px;">
+            Select Student :
+            <select id="students" name="students" onchange="populategraph(); adddetails(this.value);" style="display:inline;background-color: #f2f2f2; border: none; padding: 10px; border-radius: 5px; font-size: 14px; color: #333;">
+              <option value="">Roll number</option>
+              <% students.forEach(function(student) { %>
+                <option value="<%= student._id %>"><%= student.roll %></option>
+              <% }) %>
+            </select>
+            <span id="name" style="margin-left: 38rem;"></span>
+            <span id="submissions" style=" margin-left: 5rem;"></span>
+          </p>
+        </div>        
+        <div id="chart-container" style="display: flex; justify-content: center;"></div>
         
       </div>
 
@@ -163,7 +209,7 @@
                 data: {
                   labels: data.labels,
                   datasets: [{
-                    label: 'Assignments',
+                    label: 'Submissions',
                     data: data.data,
                     backgroundColor: 'rgb(255, 99, 13)',
                     borderColor: 'rgb(255, 99, 132)',
@@ -175,7 +221,23 @@
                     y: {
                         suggestedMin: 0,
                         suggestedMax: data.totalStudents,
-                        stepSize: 1
+                        stepSize: 1,
+                        title: {
+                        display: true,
+                        text: 'Submissions',
+                        font: {
+                          weight: 'bold'
+                        }
+                      }
+                    },
+                    x: {
+                      title: {
+                        display: true,
+                        text: 'Assignments Title',
+                        font: {
+                          weight: 'bold'
+                        }
+                      }
                     }
                 }
               }
@@ -187,6 +249,26 @@
             console.error('An error occurred:', error);
           }
         });
+
+        function adddetails(id) {
+          console.log(id);
+          fetch(`/login/Instructor/<%=course%>/student/${id}`)
+            .then(response => {
+              if (!response.ok) {
+                throw new Error('Network response was not ok');
+              }
+              return response.json();
+            })
+            .then(data => {
+              document.getElementById("name").innerHTML = "Name :" + data.name;
+              document.getElementById("submissions").innerHTML = "Submissions : " + data.count;
+            })
+            .catch(error => {
+              console.error('There was an error:', error);
+            });
+        }
+
+
 
         function populategraph() {
           const datasetColors = {
@@ -201,14 +283,14 @@
             .then(response => response.json())
             .then(data => {
               const chartContainer = document.getElementById('chart-container');
-              chartContainer.innerHTML = '<canvas id="myChart2" ></canvas>'; 
+              chartContainer.innerHTML = '<canvas id="myChart2" style="flex: 0 0 auto; width: 100%; max-width: 700px; height: 200px; margin: 20px;"></canvas>'; 
               const ctx = document.getElementById('myChart2').getContext('2d');
               const chart = new Chart(ctx, {
                 type: 'bar',
                 data: {
                   labels: data.labels,
                   datasets: [{
-                    label: 'submsissions',
+                    label: 'Submsissions',
                     data: data.data,
                     backgroundColor: [
                       datasetColors["Submitted"],
@@ -224,7 +306,14 @@
                     y: {
                         suggestedMin: 0,
                         suggestedMax: data.totalAssignments,
-                        stepSize: 1
+                        stepSize: 1,
+                        title: {
+                          display: true,
+                          text: 'Submissions',
+                          font: {
+                          weight: 'bold'
+                        }
+                      }
                     }
                 }
                 }

@@ -8,6 +8,7 @@ const express = require('express'),
     Instructor = require(__dirname + "/../user_model/user_model2.js"),
     Assignment = require(__dirname +"/../user_model/user_model5.js"),
     Submissions = require(__dirname + "/../user_model/user_model6.js"),
+    Announcements = require(__dirname + "/../user_model/user_model7.js"),
     session = require('express-session');
 
     router.use(bodyParser.urlencoded({ extended: true }));
@@ -134,26 +135,41 @@ router.post("/:cid/submit/:id", upload.single('file'),async (req, res) => {
   }
 });
 
+//announcement
+router.get("/:cid/announcement", async (req, res)=>{
+  try{
+    const announcements = await Announcements.find({courseID: req.params.cid})
+    const User = await getStudentByStudentId(req.session.userId);
+    res.render('sannouncement', {announcement:announcements,user: User.email,course: req.params.cid});
+  } catch (error) {
+    console.log(error);
+    res.status(500).send('Server error');
+  }
+})
+
 router.get("/:cid/submissions", async (req, res) => {
   try {
     const courseId = req.params.cid;
     const User = await getStudentByStudentId(req.session.userId);
     const assignments = await Submissions.find({ studentID: req.session.userId });
+
     if (assignments.length === 0) {
-      assignments.push({ name: "NO SUBMISSIONS", grade: "😔" });
+      res.render("submission", { user: User.email, course: courseId, assignment: null });
+      return;
     }
 
-    submitted = [];
+    let submitted = [];
     for (let i = 0; i < assignments.length; i++) {
-      const result = await Assignment.findOne({ _id: assignments[i].assignmentID });
-      let submit = new Object();
-      submit.name = result.title;
-      submit.date = assignments[i].submissionDate < result.issuedDate ? "Submitted" : "Late Submission";
-      submit.grade = result.grade === null || result.grade === undefined ? "Not Graded" : result.grade;
-      submitted.push(submit);
-      console.log(result.grade);
+      const result = await Assignment.findOne({ _id: assignments[i].assignmentID, courseID: courseId });
+      if (result) {
+        let submit = new Object();
+        submit.name = result.title;
+        submit.date = assignments[i].submissionDate < result.issuedDate ? "Submitted" : "Late Submission";
+        submit.grade = assignments[i].grade === null || assignments[i].grade === undefined ? "Not Graded" : assignments[i].grade;
+        submit.maxpoints = result.points;
+        submitted.push(submit);
+      }
     }
-    console.log(submitted);
     res.render("submission", { user: User.email, course: courseId, assignment: submitted });
   } catch (error) {
     console.error(error);
@@ -161,11 +177,44 @@ router.get("/:cid/submissions", async (req, res) => {
   }
 });
 
-// router.get("/:cid/reports", async(req, res) => {
-//   try{
-    
-//   }
-// })
+//report route
+router.get('/:id/report', async (req, res) => {
+  try{
+    const User = await getStudentByStudentId(req.session.userId);
+    const assignments = await Assignment.find({ courseID:req.params.id});
+    const submissions = await Submissions.find({courses:req.params.id, studentID: req.session.userId});
+    res.render("sreport", {course: req.params.id, user: User.email,totalAssignment:assignments.length,totalSubmission:submissions.length});
+  } catch (error) {
+    console.log(error);
+    res.status(500).send('Server error');
+  }
+});
+router.get('/:cid/data', async (req, res) => {
+  try {
+    const courseId = req.params.cid;
+    const itemId = req.params.id;
+    const assignments = await Assignment.find({ courseID: courseId });
+
+    let submissionData = [0, 0, 0];
+    for (const assignment of assignments) {
+      const submission = await Submissions.findOne({ studentID: itemId, assignmentID: assignment._id });
+      if (submission) {
+        if (submission.submissionDate <= assignment.submissionDate) {
+          submissionData[0]++;
+        } else {
+          submissionData[1]++;
+        }
+      } else {
+        submissionData[2]++;
+      }
+    }
+    const labels = ["Submitted", "Late Submission", "Pending"];
+    res.json({ labels: labels, data: submissionData, totalAssignments: assignments.length });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send('Internal server error');
+  }
+});
 
 module.exports = router;
 

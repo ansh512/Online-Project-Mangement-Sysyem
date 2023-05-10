@@ -116,6 +116,21 @@ i {
 .text-group > span:not(:last-child) {
   margin-right: 25rem;
 }
+.announcement {
+  background-color: #f8f8f8;
+  padding: 20px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+.announcement-content {
+  color: #333;
+  margin-bottom: 10px;
+}
+.announcement-date {
+  color: #777;
+  font-size: 14px;
+}
 
 </style>
 
@@ -138,10 +153,10 @@ i {
             <i class="fa-solid fa-file-arrow-up"></i> Assignments</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/login/Student/<%=course %>/announcement">
-            <i class="fa-solid fa-file-arrow-up"></i> Announcement
-          </a>
-        </li>
+            <a class="nav-link" href="/login/Student/<%=course %>/announcement">
+              <i class="fa-solid fa-file-arrow-up"></i> Announcement
+            </a>
+          </li>
         <li class="nav-item">
           <a class="nav-link active" href="/login/Student/<%=course %>/submissions">
             <i class="fa-solid fa-file-arrow-up"></i> Submissions</a>
@@ -153,27 +168,22 @@ i {
        </ul> 
       </div>
     <div class="main">
-      <div class="subheader"><h3>My Submissions</h3></div>
-      <div class = "submain">
-        <div class="list">
-          <% if (assignment && assignment.length > 0) { %>
-            <% assignment.forEach(a => { %>
-              <div class="list-item">
-                <span class="text-group">
-                  <span><%= a.name %></span>
-                  <span><%= a.date %></span>
-                  <span><%= a.grade %> / <%= a.maxpoints %></span>
-                </span>
-              </div>
-            <% }); %>
-          <% } else { %>
-            <div class="list-item">
-              <span class="text-group">
-                <span><h2 style="font-style: italic;"> "Well, this is awkward... nada!" 🤷‍♂️ </h2></span>
-              </span>
+      <div class="subheader"><h3>Announcements</h3></div>
+      <div id="announcementList">
+        <% if (announcement && announcement.length > 0) { %>
+          <% announcement.forEach(a => { %>
+            <div class="announcement">
+              <span class="announcement-date"><%=a.date%></span>
+              <p class="announcement-content"><%=a.announcement%></p>
             </div>
-          <% } %>          
-        </div>
+          <% }); %>
+        <% } else { %>
+          <div class="card">
+            <span class="text-group">
+              <span><h2 style="font-style: italic;"> "Shhh... No announcements whispering in the corridors." 🙂 </h2></span>
+            </span>
+          </div>
+        <% } %> 
       </div>
     </div>
       <div class="footer">

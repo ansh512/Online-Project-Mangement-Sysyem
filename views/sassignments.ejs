@@ -205,7 +205,7 @@ i {
   right: 10px;
   font-size: 18px;
   font-weight: bold;
-  color: #555;
+  color: red;
   cursor: pointer;
 }
 
@@ -230,11 +230,16 @@ i {
             <i class="fa-solid fa-file"></i> Assignments</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link" href="/login/Student/<%=course %>/announcement">
+            <i class="fa-solid fa-file-arrow-up"></i> Announcement
+          </a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href="/login/Student/<%=course %>/submissions">
             <i class="fa-solid fa-file-arrow-up"></i> Submissions</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/login/Student/<%=course %>/reports"> 
+          <a class="nav-link" href="/login/Student/<%=course %>/report"> 
             <i class="fa-solid fa-square-poll-vertical"></i> Reports</a>
         </li>
        </ul> 
@@ -338,8 +343,6 @@ i {
           window.location.href = selectedValue;
         }
       });
-
-
     </script>
   </body>
 </html>

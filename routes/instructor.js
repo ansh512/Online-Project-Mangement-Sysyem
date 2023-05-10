@@ -7,12 +7,13 @@ const Student = require(__dirname + "/../user_model/user_model1.js");
 const Instructor = require(__dirname + "/../user_model/user_model2.js");
 const Submissions = require(__dirname + "/../user_model/user_model6.js");
 const Assignment = require(__dirname + "/../user_model/user_model5.js");
-const Announcements = require(__dirname + "/../user_model/user_model5.js");
+const Announcements = require(__dirname + "/../user_model/user_model7.js");
 const session = require('express-session');
 const mongoose = require('mongoose');
 
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(express.static(__dirname + '/public'));
+router.use(express.json());
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -161,26 +162,49 @@ router.get("/:cid/download/:sid", async (req, res) => {
 //announcement
 router.get("/:cid/announcement", async (req, res)=>{
   try{
-    const announcements = await Announcements({courseID: req.params.cid})
-    res.render('iannouncement', {announcement:announcements});
+    const announcements = await Announcements.find({courseID: req.params.cid})
+    const User = await getInstrcutorByInstructorId(req.session.userId);
+    res.render('iannouncement', {announcement:announcements,user: User.email,course: req.params.cid});
   } catch (error) {
     console.log(error);
     res.status(500).send('Server error');
   }
 })
 
+router.post("/:cid/announcement", async (req, res) => {
+  try {
+    const newAnnouncement = new Announcements({
+      courseID: req.params.cid,
+      announcement: req.body.description,
+      date: new Date().toLocaleDateString()
+    });
+    const result = await newAnnouncement.save();
+    res.json({ announcement:req.body.description, date: new Date().toLocaleDateString() });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Failed to create announcement" });
+  }
+});
+
+
+
 // assign grade
 router.post("/:id/submit/:sid", async (req, res) => {
+  console.log(req.body);
   try {
-    const Grade = req.body.grade;
-    const result = await Submissions.updateOne({ _id: req.params.sid }, { grade: Grade  });
+    const grade = req.body.grade;
+    console.log(grade);
+    const result = await Submissions.updateOne({ _id: req.params.sid }, { grade: grade });
     console.log(result);
-    res.status(204).send();
+    const responseData = { grade: req.body.grade };
+    console.log(responseData)
+    res.json(responseData);
   } catch (error) {
     console.error(error);
     res.status(500).send("Error updating user grade");
   }
 });
+
 
 
 //report route
@@ -223,6 +247,18 @@ router.get('/:cid/data', async (req, res) => {
   }
 });
 
+router.get('/:cid/student/:id', async (req, res) => {
+  try {
+    const student = await Student.findById(req.params.id);
+    const submissions = await Submissions.find({ studentID: req.params.id });
+    res.json({ name: student.name, count: submissions.length });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send('Internal server error');
+  }
+});
+
+
 router.get('/:cid/data/:id', async (req, res) => {
   try {
     const courseId = req.params.cid;
@@ -249,6 +285,7 @@ router.get('/:cid/data/:id', async (req, res) => {
     res.status(500).send('Internal server error');
   }
 });
+
 
 
 

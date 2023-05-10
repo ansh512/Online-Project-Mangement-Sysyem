@@ -7,98 +7,182 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="https://kit.fontawesome.com/e1942af5f1.js" crossorigin="anonymous"></script>
     <style>
-      body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-        width: 100%;
-      }
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  font-family: 'Open Sans', sans-serif;
+  background-color:  #E1E1E1 ;
+}
 
-      /*grid defination */
-      .grid-container {
-        min-height: 100vh;
-        display: grid;
-        grid-template-columns: 0.8fr 5fr;
-        grid-template-rows: auto 1fr auto;
-      }
-      .header {
-        display: flex;
-        justify-content: center;
-        align-items: baseline;
-        grid-column: 1 / span 2;
-        background-color: #004cffc7;
-        color: white;
-        padding: 0.5rem;
-        position:relative;
-        gap: 75rem;
-        border-radius: 10px;
-      }
-      .sidebar {
-        grid-row: 2 / span 1;
-        background-color: #f8f9fa20;
-        padding: 1rem;
-      }
-      .main {
-        grid-row: 2 / span 1;
-        grid-column: 2 / span 1;
-        padding: 1rem;
-      }
-      .footer {
-        grid-column: 1 / span 2;
-        background-color: rgba(79, 112, 171, 0.569);
-        color: white;
-        padding: 1rem;
-        text-align: center;
-      }
+/* grid definition */
+.grid-container {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 0.8fr 5fr;
+  grid-template-rows: 60px 1fr 50px;
+}
 
-      /* sidebar style */
-      .nav-item {
-        margin-bottom: 10px;
-      }
-      .nav-link {
-        display: block;
-        width: 80%;
-        padding: 10px;
-        text-decoration: none;
-        color: black;
-        background-color: #f7f7f7;
-        border-radius: 1rem;
-      }
-      .nav-link.active {
-        background-color: #007bff;
-        color: white;
-      }
-      /* this card is inspired form this - https://georgefrancis.dev/ */
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  grid-column: 1 / span 2;
+  background-color:  #F2F2F2  ;
+  color:  #1F1F1F ;
+  padding: 0.5rem;
+  position: relative;
+  gap: 72rem;
+  border-radius: 10px;
+}
 
-    .card {
-        --border-radius: 0.75rem;
-        --primary-color: #7257fa;
-        --secondary-color: #3c3852;
-        width: 210px;
-        font-family: "Arial";
-        padding: 1rem;
-        cursor: pointer;
-        border-radius: var(--border-radius);
-        background: #f1f1f3;
-        box-shadow: 0px 8px 16px 0px rgb(0 0 0 / 3%);
-        position: relative;
-    }
-    .card > * + * {
-        margin-top: 1.1em;
-    }
-    .card .card__content {
-        color: var(--secondary-color);
-        font-size: 0.86rem;
-    }
-    .card .card__title {
-        padding: 0;
-        font-size: 1.3rem;
-        font-weight: bold;
-    }
-    .card .card__date {
-        color: #6e6b80;
-        font-size: 0.8rem;
-    }
+.sidebar {
+  grid-row: 2 / span 1;
+  background-color: #FFFFFF ;
+  padding: 1rem;
+  margin:5px
+}
+
+.main {
+  grid-row: 2 / span 1;
+  grid-column: 2 / span 1;
+  padding: 0.5rem 1rem;
+}
+
+.footer {
+  grid-column: 1 / span 2;
+  background-color:  #F2F2F2 ;
+  color: #1F1F1F;
+  padding: 1rem;
+  text-align: center;
+  margin:3px
+}
+
+.subheader{
+  background-color: #F8F8F8 ;
+  color: #1F1F1F;
+  padding: 0.5rem;
+  display: block;
+  border-radius: 5px;
+  margin: 3px 3px 7px 3px ;
+}
+/* Style the submit button */
+button[type="submit"] {
+  background-color: #046380;
+  border-color: #046380;
+  text-transform: uppercase;
+  transition: all 0.2s ease-in-out;
+}
+button[type="submit"]:hover {
+  background-color: #2c3e50;
+  border-color: #2c3e50;
+}
+button[type="reset"] {
+  background-color: #2c3e50;
+  border-color: #2c3e50;
+  text-transform: uppercase;
+  transition: all 0.2s ease-in-out;
+}
+button[type="reset"]:hover {
+  background-color: #046380;
+  border-color: #046380;
+}
+
+.sidebar .nav-item a,
+.sidebar .nav-item a::after,
+.sidebar .nav-item a::before {
+  box-sizing: content-box;
+}
+.nav-item {
+  margin-bottom: 10px;
+}
+
+.nav-link {
+  display: block;
+  width: 80%;
+  padding: 10px;
+  text-decoration: none;
+  color: white;
+  background-color: #2c3e50;
+  border-radius: 1rem;
+}
+.nav-link.active {
+  background-color: #046380;
+  color: white;
+}
+i {
+  margin-right: 5px;
+}
+.float{
+	position:fixed;
+	width:60px;
+	height:60px;
+	bottom:80px;
+	right:50px;
+	background-color:#046380;
+	color:#FFF;
+	border-radius:50px;
+	text-align:center;
+	box-shadow: 2px 2px 3px #999;
+  z-index: 9999;
+}
+.float:hover{
+  cursor: pointer;
+}
+.popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+}
+
+.popup-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.formatted-textarea {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+.close {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  color: red;
+  cursor: pointer;
+}
+.announcement {
+  background-color: #f8f8f8;
+  padding: 20px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+.announcement-content {
+  color: #333;
+  margin-bottom: 10px;
+}
+.announcement-date {
+  color: #777;
+  font-size: 14px;
+}
     </style>
   </head>
 
@@ -106,7 +190,7 @@
     <div class="grid-container">
 
       <div class="header">
-        <div><h1 id = "headTitle">TU_Labs</h1></div>
+        <div><h3 id = "headTitle" style="font-weight: bold;">TU_Labs</h3></div>
         <div><select name = "user" style="border:none;box-shadow:none;" id="user-menu">
           <option value="" disabled selected><%= user %></option>
           <option value="/login/Instructor">My Courses</option>
@@ -118,29 +202,59 @@
         <p><%=course%></p>
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a class="nav-link active" href="/login/Instructor/<%=course %>">Post</a>
+            <a class="nav-link" href="/login/Instructor/<%=course %>">
+              <i class="fa-solid fa-file-arrow-up"></i> Post
+            </a>
+          </li>
+          <li class="nav-item" style="margin-bottom: -15px;">
+            <a class="nav-link active" href="/login/Instructor/<%=course %>/announcement">
+              <i class="fa-solid fa-file-arrow-up"></i> Announcement
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/login/Instructor/<%=course %>/grade">Submissions</a>
+            <a class="nav-link" href="/login/Instructor/<%=course %>/grade">
+              <i class="fa-solid fa-check"></i> Grade
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/login/Instructor/<%=course %>/report">Reports</a>
+            <a class="nav-link" href="/login/Instructor/<%=course %>/report">
+              <i class="fa-solid fa-square-poll-vertical"></i> Reports
+            </a>
           </li>
         </ul>
       </div>
 
       <div class="main">
-        <% announcement.forEach(announcement => { %>
-            <div class="card">
-              <h3 class="card__title"><%= announcement.title %></h3>
-              <p class="card__content"><%= announcement.discription %> </p>
-              <div class="card__date"><%= announcement.date %></div>
+        <div class = "subheader"><h3 >Make an announcement</h3></div>
+        <button id="openButton" class="float"><i class="fa fa-plus my-float"></i></button>
+        <div id="announcementList">
+          <% if (announcement && announcement.length > 0) { %>
+            <% announcement.forEach(a => { %>
+              <div class="announcement">
+                <span class="announcement-date"><%=a.date%></span>
+                <p class="announcement-content"><%=a.announcement%></p>
+              </div>
+            <% }); %>
+          <% } else { %>
+            <div class="announcement">
+              <span class="text-group">
+                <span><h2 style="font-style: italic;"> "Well, this is awkward... nada!" 🤷‍♂️ </h2></span>
+              </span>
             </div>
-          <% }); %>
-          
+          <% } %> 
+        </div>
+    
+        <div id="popup" class="popup">
+          <div class="popup-content">
+            <form action="/login/Instructor/<%=course%>/announcement" id="myForm">
+              <textarea id="announcement" name="announcement" class="formatted-textarea" rows="4" cols="50" placeholder="Announce something"></textarea><br>
+              <button type="submit" class="btn btn-primary">Post</button>
+              <button id="closeButton" class="close">&times;</button>
+          </form> 
+          </div>
+        </div>
       </div>
-
-      <hr style="height:2px;border-width:0;color:gray;background-color:gray"/>
+      
       <div class="footer">
           <p>&copy; 2023 anubhavbinit</p>
       </div>
@@ -148,6 +262,7 @@
     </div>
 
     <script>
+    
       document.addEventListener('DOMContentLoaded', function() {
           var navLinks = document.querySelectorAll('.nav-link');
           navLinks.forEach(function(navLink) {
@@ -173,6 +288,56 @@
           }else{
             window.location.href = selectedValue;
           }
+        });
+
+        const openButton = document.getElementById('openButton');
+        const popup = document.getElementById('popup');
+        const closeButton = document.getElementById('closeButton');
+
+        openButton.addEventListener('click', () => {
+          popup.style.display = 'block';
+        });
+
+        closeButton.addEventListener('click', () => {
+          popup.style.display = 'none';
+        });
+
+        const button = document.querySelector('.btn.btn-primary');
+        const announcementList = document.getElementById('announcementList')
+        button.addEventListener('click',function(event){
+          event.preventDefault();
+
+          const form = document.getElementById('myForm');
+          const description = document.getElementById('announcement').value;
+          console.log(form.action)
+          fetch(form.action, {
+            method: "POST",
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ description })
+          })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
+          .then(data => {
+            var newDiv = document.createElement('div');
+            newDiv.className = 'card';
+            var span = document.createElement('span');
+            span.innerHTML = data.date;
+            var paragraph = document.createElement('p');
+            paragraph.textContent = data.announcement;
+            newDiv.appendChild(paragraph);
+            newDiv.appendChild(span);
+            announcementList.appendChild(newDiv);
+            popup.style.display = 'none';
+          })
+          .catch(error => {
+            console.error("There was an error:", error);
+          });
         });
     </script>
   </body>

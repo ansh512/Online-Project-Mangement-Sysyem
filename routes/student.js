@@ -179,25 +179,37 @@ router.get("/:cid/submissions", async (req, res) => {
 
 //report route
 router.get('/:id/report', async (req, res) => {
-  try{
-    const User = await getStudentByStudentId(req.session.userId);
-    const assignments = await Assignment.find({ courseID:req.params.id});
-    const submissions = await Submissions.find({courses:req.params.id, studentID: req.session.userId});
-    res.render("sreport", {course: req.params.id, user: User.email,totalAssignment:assignments.length,totalSubmission:submissions.length});
+  try {
+    const user = await getStudentByStudentId(req.session.userId);
+    const assignments = await Assignment.find({ courseID: req.params.id });
+    let submissions = [];
+
+    for (const assignment of assignments) {
+      const submission = await Submissions.findOne({ assignmentID: assignment._id, studentID: req.session.userId });
+      if (submission) {
+        submissions.push(submission);
+      }
+    }
+    res.render("sreport", {
+      course: req.params.id,
+      user: user.email,
+      totalAssignment: assignments.length,
+      totalSubmission: submissions.length
+    });
   } catch (error) {
     console.log(error);
     res.status(500).send('Server error');
   }
 });
+
 router.get('/:cid/data', async (req, res) => {
   try {
     const courseId = req.params.cid;
-    const itemId = req.params.id;
     const assignments = await Assignment.find({ courseID: courseId });
 
     let submissionData = [0, 0, 0];
     for (const assignment of assignments) {
-      const submission = await Submissions.findOne({ studentID: itemId, assignmentID: assignment._id });
+      const submission = await Submissions.findOne({ studentID: req.session.userId, assignmentID: assignment._id });
       if (submission) {
         if (submission.submissionDate <= assignment.submissionDate) {
           submissionData[0]++;

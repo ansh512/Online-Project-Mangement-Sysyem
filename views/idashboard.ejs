@@ -14,7 +14,6 @@ body {
   font-family: 'Open Sans', sans-serif;
   background-color:  #E1E1E1 ;
 }
-
 /* grid definition */
 .grid-container {
   min-height: 100vh;
@@ -40,8 +39,7 @@ body {
 main {
   grid-row: 2;
   grid-column: 1/span 2;
-  padding: 1rem;
-  margin:3px
+  padding: 0.5rem 1rem;
 }
 
 /* Style the footer */
@@ -52,6 +50,15 @@ main {
   padding: 1rem;
   text-align: center;
   margin:3px
+}
+
+.subheader{
+  background-color: #F8F8F8 ;
+  color: #1F1F1F;
+  padding: 0.5rem;
+  display: block;
+  border-radius: 5px;
+  margin: 3px 3px 7px 3px ;
 }
 
 .flip-card {
@@ -101,7 +108,7 @@ main {
 }
 
 .flip-card-front {
-  background: linear-gradient(120deg, white 60%, rgb(231, 231, 231) 88%,
+  background: linear-gradient(120deg, rgb(143, 225, 231) 60%, rgb(231, 231, 231) 88%,
      rgb(211, 211, 211) 40%, rgba(127, 127, 127, 0.603) 48%);
   color: #046380;
 }
@@ -118,14 +125,14 @@ main {
 <body>
   <div class="grid-container">
     <div class="header">
-      <div><h1 id = "headTitle">TU_Labs</h1></div>
+      <div><h1 id = "headTitle">LabBuddy</h1></div>
       <div><select name = "user" style="border:none;box-shadow:none;" id="user-menu">
         <option value="" disabled selected><%= user %></option>
-        <option value="/login/Student">Courses</option>
         <option value="/logout">Logout</option>
       </select></div>
     </div>
     <main>
+      <div class="subheader"><h3>My Courses</h3></div>
       <% course.forEach(course => { %>
         <a href="/login/Instructor/<%= course.courseID %>">
           <div class="flip-card">
@@ -134,7 +141,7 @@ main {
                 <p class="title"><%= course.name %></p>
               </div>
               <div class="flip-card-back">
-                <p class="title"><%= course.name %></p>
+                <p><%= course.name %></p>
                 <p class="title"><%= course.courseID %></p>
               </div> 
             </div>
@@ -146,5 +153,21 @@ main {
       <p>&copy; 2023 anubhavbinit</p>
   </div>
   </div>
+  <script>
+    var userMenu = document.getElementById('user-menu');
+    function confirmLogout() {
+        if (confirm("Are you sure you want to log out?")) {
+          window.location.href = "/logout";
+        }
+      }
+      userMenu.addEventListener('change', function() {
+        var selectedValue = this.value;
+        if (selectedValue == "/logout") {
+          confirmLogout();
+        }else{
+          window.location.href = selectedValue;
+        }
+      });
+  </script>
 </body>
 </html>

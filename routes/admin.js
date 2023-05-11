@@ -1,3 +1,5 @@
+const { default: mongoose } = require('mongoose');
+
 const express = require('express'),
     router = express.Router(),
     multer = require('multer'),
@@ -7,6 +9,8 @@ const express = require('express'),
     Courses = require(__dirname + "/../user_model/user_model4.js"),
     Student = require(__dirname + "/../user_model/user_model1.js");
     Instructor = require(__dirname + "/../user_model/user_model2.js");
+    PDFDocument = require('pdfkit');
+    //mongoose = require('mongoose');
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -23,10 +27,13 @@ const upload = multer({ storage: storage });
 router.get('/', authMiddleware, async (req, res) => {
   try {
     const user = await Admin.findById(req.session.userId);
+    const allStudents = await Student.find({});
+    const allCourses = await Courses.find({});
+    const allInstructor = await Instructor.find({});
     if (!user) {
       res.status(401).send('Unauthorized');
     } else {
-      res.render("adashboard");
+      res.render("adashboard",{totalStudent:allStudents.length,totalCourse:allCourses.length,totalInstrcutor:allInstructor.length});
     }
   } catch (err) {
     console.error(err);
@@ -78,6 +85,82 @@ router.get('/edit_courses/:id', async (req, res) => {
       console.log(err);
     }
   });
+
+router.get('/students/pdf', async (req, res) => {
+    try {
+      const allStudents = await Student.find({});
+  
+      // Create a new PDF document
+      const doc = new PDFDocument();
+  
+      // Write student details to PDF
+      allStudents.forEach((student) => {
+        doc.fontSize(12).text(`Roll No: ${student.roll}`);
+        doc.fontSize(12).text(`Name: ${student.name}`);
+        doc.fontSize(12).text(`Email: ${student.email}`);
+        doc.moveDown();
+      });
+  
+      // Pipe the PDF document to the response
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', 'attachment; filename=student_details.pdf');
+      doc.pipe(res);
+      doc.end();
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ error: 'Failed to generate PDF' });
+    }
+  });
+  router.get('/instructors/pdf', async (req, res) => {
+    try {
+      const allInstructor = await Instructor.find({});
+  
+      // Create a new PDF document
+      const doc = new PDFDocument();
+  
+      // Write student details to PDF
+      allInstructor.forEach((instructor) => {
+        doc.fontSize(12).text(`Name: ${instructor.name}`);
+        doc.fontSize(12).text(`Email: ${instructor.email}`);
+        doc.moveDown();
+      });
+  
+      // Pipe the PDF document to the response
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', 'attachment; filename=student_details.pdf');
+      doc.pipe(res);
+      doc.end();
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ error: 'Failed to generate PDF' });
+    }
+  });
+  router.get('/courses/pdf', async (req, res) => {
+    try {
+      const allCourses = await Courses.find({});
+  
+      // Create a new PDF document
+      const doc = new PDFDocument();
+  
+      // Write student details to PDF
+      allCourses.forEach((course) => {
+        doc.fontSize(12).text(`CourseID: ${course.courseID}`);
+        doc.fontSize(12).text(`Title: ${course.name}`);
+        doc.fontSize(12).text(`Instructor: ${course.instructor}`);
+        doc.moveDown();
+      });
+  
+      // Pipe the PDF document to the response
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', 'attachment; filename=student_details.pdf');
+      doc.pipe(res);
+      doc.end();
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ error: 'Failed to generate PDF' });
+    }
+  });
+
 
 router.post('/edit_students', upload.single('excel'), async (req, res) => {
 
@@ -214,8 +297,8 @@ router.post('/edit_instructor', upload.single('excel'), async (req, res) => {
           console.log(`${result.length} documents were inserted into the collection`);
   
         } finally {
-          await res.redirect('/login/Admin');
-          await mongoose.connection.close();
+          await res.redirect('/login/Admin/edit_instructor');
+          //await mongoose.connection.close();
         }
 
 });

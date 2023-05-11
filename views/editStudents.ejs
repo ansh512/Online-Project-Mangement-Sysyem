@@ -5,314 +5,392 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://kit.fontawesome.com/e1942af5f1.js" crossorigin="anonymous"></script>
     <style>
-      html,
-      body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-
-      .grid-container {
-        display: grid;
-        grid-template-columns: 1fr 5fr;
-        grid-template-rows: 1fr 7fr 0.5fr;
-        height: 100%;
-      }
-
-      .header {
-        grid-column: 1 / span 2;
-        background-color: #007bff;
-        color: white;
-        padding: 0.5rem;
-	   position:relative;
-	   align-items: center;
-      }
-
-      .sidebar {
-        grid-row: 2 / span 1;
-        background-color: #f8f9fa;;
-        padding: 1rem;
-      }
-
-      .main {
-        grid-row: 2 / span 1;
-        grid-column: 2 / span 1;
-        padding: 1rem;
-      }
-
-      .footer {
-        grid-column: 1 / span 2;
-        background-color: #007bff;
-        color: white;
-        padding: 1rem;
-	   text-align: center;
-      }
-
-
-    form {
-      /* margin-top: 20px; */
-    }
-    .form-group label {
-      font-weight: bold;
-      margin-bottom: 5px;
-      text-transform: uppercase;
-    }
-    .form-control {
-      border-radius: 0;
-    }
-    .form-control:focus {
-      box-shadow: none;
-    }
-    .form-group small {
-      color: #6c757d;
-      font-size: 12px;
-    }
-
-    /* Style the file upload button */
-    .custom-file-label {
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
-    .custom-file-label::after {
-      content: "Browse";
-    }
-    .custom-file-input:focus ~ .custom-file-label {
-      border-color: #007bff;
-      box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-    }
-
-    /* Style the submit button */
-    button[type="submit"] {
-      background-color: #007bff;
-      border-color: #007bff;
-      text-transform: uppercase;
-      transition: all 0.2s ease-in-out;
-    }
-    button[type="submit"]:hover {
-      background-color: #0069d9;
-      border-color: #0062cc;
-    }
-
-    /* Style the sidebar */
-    #sidebar h3 {
-      font-size: 20px;
-      margin-bottom: 20px;
-      text-transform: uppercase;
-    }
-    #sidebar ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-    #sidebar li {
-      margin-bottom: 10px;
-    }
-    #sidebar a {
-      color: #343a40;
-      text-decoration: none;
-    }
-    #sidebar a:hover {
-      color: #007bff;
-    }
-
-    /*style the header*/
-    #headTitle{
-      position: absolute;
-      left: 0;
-      padding: 10px;
-    }
-    #headOptions{
-      position: absolute;
-      right: 0;
-      padding: 10px;
-    }
- .hidden {
-  display: none;
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  font-family: 'Open Sans', sans-serif;
+  background-color:  #E1E1E1 ;
 }
 
-<!--style for option1Field--!>
-  .form-paragraph {
-    margin-top: 10px;
-    font-size:0.9375rem;
-    color:rgb(105, 105, 105);
-  }
+/* grid definition */
+.grid-container {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 0.8fr 5fr;
+  grid-template-rows: 60px 1fr 50px;
+}
 
-  .drop-container {
-    background-color: #fff;
-    position: relative;
-    display: flex;
-    gap: 10px;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-    margin-top: 2.1875rem;
-    border-radius: 10px;
-    border: 2px dashed rgb(171, 202, 255);
-    color: #444;
-    cursor: pointer;
-    transition: background .2s ease-in-out, border .2s ease-in-out;
-  }
+.header {
+  grid-column: 1 / span 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #F2F2F2;
+  color: #1F1F1F;
+  padding: 0.5rem;
+  border-radius: 10px;
+}
+.headerTitle {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
 
-  .drop-container:hover {
-    background: rgba(0, 140, 255, 0.164);
-    border-color: rgba(17, 17, 17, 0.616);
-  }
+.header h3 {
+  font-weight: bold;
+  margin: 0;
+  padding-left: 15px;
+}
 
-  .drop-container:hover .drop-title {
-    color: #222;
-  }
+.dropdown {
+  position: relative;
+  margin-left: 1rem;
+  margin-right: 20px;
+  cursor: pointer;
+}
 
-  .drop-title {
-    color: #444;
-    font-size: 20px;
-    font-weight: bold;
-    text-align: center;
-    transition: color .2s ease-in-out;
-  }
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #FFFFFF;
+  min-width: 100px;
+  border-radius: 5px;
+  padding: 0.5rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
 
-  #excel {
-    width: 350px;
-    max-width: 100%;
-    color: #444;
-    padding: 2px;
-    background: #fff;
-    border-radius: 10px;
-    border: 1px solid rgba(8, 8, 8, 0.288);
-  }
+.dropdown-content a {
+  display: block;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  color: #1F1F1F;
+}
 
-  #excel::file-selector-button {
-    margin-right: 20px;
-    border: none;
-    background: #084cdf;
-    padding: 10px 20px;
-    border-radius: 10px;
-    color: #fff;
-    cursor: pointer;
-    transition: background .2s ease-in-out;
-  }
-  #excel::file-selector-button:hover {
-    background: #0d45a5;
-  }
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.sidebar {
+  grid-row: 2 / span 1;
+  background-color: #FFFFFF ;
+  padding: 1rem;
+  margin:5px
+}
+
+.main {
+  grid-row: 2 / span 1;
+  grid-column: 2 / span 1;
+  padding: 0.5rem 1rem;
+}
+
+.footer {
+  grid-column: 1 / span 2;
+  background-color:  #F2F2F2 ;
+  color: #1F1F1F;
+  padding: 1rem;
+  text-align: center;
+  margin:3px
+}
+
+.subheader{
+  background-color: #F8F8F8 ;
+  color: #1F1F1F;
+  padding: 0.5rem;
+  display: block;
+  border-radius: 5px;
+  margin: 3px 3px 7px 3px ;
+}
+
+.submain{
+  background-color: #F8F8F8 ;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.form-group label {
+  font-weight: normal;
+  margin-bottom: 5px;
+}
+.form-control {
+  border-radius: 0;
+}
+.form-control:focus {
+  box-shadow: none;
+}
+.form-group small {
+  color: #6c757d;
+  font-size: 12px;
+}
+/* Style the file upload button */
+.custom-file-label {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.custom-file-label::after {
+  content: "Browse";
+}
+.custom-file-input:focus ~ .custom-file-label {
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Style the submit button */
+button[type="submit"] {
+background-color: #046380;
+border-color: #046380;
+text-transform: uppercase;
+transition: all 0.2s ease-in-out;
+}
+button[type="submit"]:hover {
+background-color: #2c3e50;
+border-color: #2c3e50;
+}
+
+/*style sidebar*/
+.sidebar .nav-item a,
+.sidebar .nav-item a::after,
+.sidebar .nav-item a::before {
+  box-sizing: content-box;
+}
+.nav-item {
+  margin-bottom: -15px;
+}
+
+.nav-link {
+  display: block;
+  width: 80%;
+  padding: 10px;
+  text-decoration: none;
+  color: white;
+  background-color: #2c3e50;
+  border-radius: 1rem;
+}
+.nav-link.active {
+  background-color: #046380;
+  color: white;
+}
+i {
+  margin-right: 5px;
+}
+
+.hidden {
+display: none;
+}
+.form-paragraph {
+  margin-top: 10px;
+  font-size: 0.9375rem;
+  color: rgb(105, 105, 105);
+}
+
+.drop-container {
+  background-color: #fff;
+  position: relative;
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  margin-top: 2.1875rem;
+  border-radius: 10px;
+  border: 2px dashed rgb(171, 202, 255);
+  color: #444;
+  cursor: pointer;
+  transition: background .2s ease-in-out, border .2s ease-in-out;
+}
+
+.drop-container:hover {
+  background: rgba(0, 140, 255, 0.164);
+  border-color: rgba(17, 17, 17, 0.616);
+}
+
+.drop-container:hover .drop-title {
+  color: #222;
+}
+
+.drop-title {
+  color: #444;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  transition: color .2s ease-in-out;
+}
+
+#excel {
+  width: 350px;
+  max-width: 100%;
+  color: #444;
+  padding: 2px;
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid rgba(8, 8, 8, 0.288);
+}
+
+#excel::file-selector-button {
+  margin-right: 20px;
+  border: none;
+  background: #084cdf;
+  padding: 10px 20px;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+  transition: background .2s ease-in-out;
+}
+#excel::file-selector-button:hover {
+  background: #0d45a5;
+}
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 9999;
+  display: none;
+}
+.alert-success {
+  z-index: 10000;
+}
 
     </style>
   </head>
   <body>
     <div class="grid-container">
       <div class="header">
-
-<img src="https://w7.pngwing.com/pngs/411/956/png-transparent-customer-login-avatar-head-portrait-client-user-thumbnail.png" alt="User" style="width:50px;height:50px;position:absolute;right:0;margin-right:20px;">
-      <h1 id = "headTitle">TU_Labs</h1>
-
-
+        <div><h3 class = "headTitle" style="font-weight: bold;">LabBuddy</h3></div>
+        <div class="dropdown">
+          <i class="fa-solid fa-user" id="dropdownButton"></i>
+          <div class="dropdown-content" id="dropdownContent">
+            <a href="#" onclick="confirmLogout()">Logout</a>
+          </div>
+        </div> 
       </div>
       <div class="sidebar">
 
-      <h3>Options</h3>
-      <ul class="nav flex-column">
-        <li class="nav-item">
-          <a class="nav-link active" href="/login/Admin">Dashboard</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/login/Admin/edit_courses">Edit Courses</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/login/Admin/edit_students">Edit Students</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/login/Admin/edit_instructor">Edit Instructor</a>
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link" href="/login/Admin">
+              <i class="fa-solid fa-house"></i>Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/login/Admin/edit_courses">
+            <i class="fa-solid fa-pen-to-square"></i>  Edit Courses</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="/login/Admin/edit_students">
+            <i class="fa-solid fa-pen-to-square"></i>  Edit Students</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/login/Admin/edit_instructor">
+            <i class="fa-solid fa-pen-to-square"></i> Edit Instructor</a>
         </li>
 
       </div>
       <div class="main">
+        <div class="subheader"><h3>Edit Student Details</h3></div>
+        <div class="submain">
+          <!-- Overlay to disable the window -->
+          <div class="overlay"></div>
 
-   <form action="/login/Admin/edit_students" method="post" enctype="multipart/form-data">
-      <label for="options">Select an option:</label>
-      <select id="options" name="options" onchange="showFields()">
-        <option value="">Select an option</option>
-        <option value="upload">UPLOAD</option>
-        <option value="add">ADD</option>
-        <option value="update">UPDATE</option>
-      </select>
-      <div id="option1Fields">
-        <span style = "font-size: 1.8rem ">Upload your file</span>
-        <p class="form-paragraph">
-            File should be an excel sheet (.xlsx file)
-          </p>
-         <label for="file-input" class="drop-container">
-        <span class="drop-title">Drop files here</span>
-        or
-        <input  type="file" id="excel" name="excel" accept=".xls,.xlsx,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
-      </label>
-      </div>
-
-      <div id="option2Fields" class="hidden">
-          <div class="form-group">
-            <label for="field1">Name</label>
-            <input type="text" class="form-control" name="name" placeholder="Enter field 1">
+          <!-- Alert message -->
+          <div class="alert alert-success alert-dismissible fade show" role="alert" style="display:none;">
+            Form submitted successfully.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
           </div>
-          <div class="form-group">
-            <label for="field2">Roll no.</label>
-            <input type="text" class="form-control" name="roll_no" placeholder="Enter field 2">
-          </div>
-          <div class="form-group">
-            <label for="field3">Email</label>
-            <input type="email" class="form-control" name="email" placeholder="Enter field 3">
-          </div>
-          <div class="form-group">
-            <label for="field3">Password</label>
-            <input type="text" class="form-control" name="password" placeholder="Enter field 3">
-          </div>
-          <div class="form-group">
-            <label for="field3">Courses</label><br />
-              <% course.forEach(course => { %>
-              <label for="<%=course.courseID %>" class= "checkbox-inline">
-              <input type="checkbox" id="<%=course.courseID %>" name="courses" value="<%=course.courseID %>"><%=course.courseID%> <%= course.name %>
-              </label><br>
-            <% }); %>
-          </div>
-      </div>
-
-      <div id="option3Fields" class="hidden">
-        <label for="StudentOptions">Students:</label>
-        <select id="StudentOptions" name="StudentOptions" onchange="populateForm()">
-          <option value="">Select student</option>
-          <% student.forEach(function(student) { %>
-            <option value="<%= student._id %>"><%= student.roll %></option>
-          <% }) %>
-        </select>
-        <div class="form-group">
-          <label for="field1">Name</label>
-          <input type="text" class="form-control" name="uname" id="uname" placeholder="Enter field 1" value = "">
+  
+          <form action="/login/Admin/edit_students" method="post" enctype="multipart/form-data">
+            <select id="options" name="options" onchange="showFields()" style="margin-bottom:20px;display:inline;background-color: #f2f2f2; border: none; padding: 10px; border-radius: 5px; font-size: 14px; color: #333;">
+              <option value="">Select an option</option>
+              <option value="upload">UPLOAD</option>
+              <option value="add">ADD</option>
+              <option value="update">UPDATE</option>
+            </select>
+            <div id="option1Fields">
+              <span style = "font-size: 1.8rem ">Upload your file</span>
+              <p class="form-paragraph">
+                  File should be an excel sheet (.xlsx file)
+                </p>
+               <label for="file-input" class="drop-container">
+              <span class="drop-title">Drop files here</span>
+              or
+              <input  type="file" id="excel" name="excel" accept=".xls,.xlsx,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+            </label>
+            </div>
+      
+            <div id="option2Fields" class="hidden">
+                <div class="form-group">
+                  <label for="field1">Name</label>
+                  <input type="text" class="form-control" name="name" placeholder="Enter field 1">
+                </div>
+                <div class="form-group">
+                  <label for="field2">Roll no.</label>
+                  <input type="text" class="form-control" name="roll_no" placeholder="Enter field 2">
+                </div>
+                <div class="form-group">
+                  <label for="field3">Email</label>
+                  <input type="email" class="form-control" name="email" placeholder="Enter field 3">
+                </div>
+                <div class="form-group">
+                  <label for="field3">Password</label>
+                  <input type="text" class="form-control" name="password" placeholder="Enter field 3">
+                </div>
+                <div class="form-group">
+                  <label for="field3">Courses</label><br />
+                    <% course.forEach(course => { %>
+                    <label for="<%=course.courseID %>" class= "checkbox-inline">
+                    <input type="checkbox" id="<%=course.courseID %>" name="courses" value="<%=course.courseID %>"><%=course.courseID%> <%= course.name %>
+                    </label><br>
+                  <% }); %>
+                </div>
+            </div>
+      
+            <div id="option3Fields" class="hidden">
+              <label for="StudentOptions">Students:</label>
+              <select id="StudentOptions" name="StudentOptions" onchange="populateForm()" style="margin-bottom:20px;display:inline;background-color: #f2f2f2; border: none; padding: 10px; border-radius: 5px; font-size: 14px; color: #333;">
+                <option value="">Select student</option>
+                <% student.forEach(function(student) { %>
+                  <option value="<%= student._id %>"><%= student.roll %></option>
+                <% }) %>
+              </select>
+              <div class="form-group">
+                <label for="field1">Name</label>
+                <input type="text" class="form-control" name="uname" id="uname" placeholder="Enter field 1" value = "">
+              </div>
+              <div class="form-group">
+                <label for="field2">Roll no.</label>
+                <input type="text" class="form-control" name="uroll_no" id="uroll_no" placeholder="Enter field 2" value = "">
+              </div>
+              <div class="form-group">
+                <label for="field3">Email</label>
+                <input type="email" class="form-control" name="uemail" id="uemail" placeholder="Enter field 3" value = "">
+              </div>
+              <div class="form-group">
+                <label for="field3">Password</label>
+                <input type="text" class="form-control" name="upassword" id="upassword" placeholder="Enter field 3" value = "">
+              </div>
+              <div class="form-group">
+                <label for="field3">Courses</label><br />
+                  <% course.forEach(course => { %>
+                  <label for="<%=course.courseID %>" class= "checkbox-inline">
+                  <input type="checkbox" id="<%=course.courseID %>i" name="ucourses" value="<%=course.courseID %>" ><%=course.courseID%> <%= course.name %>
+                  </label><br>
+                <% }); %>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+      
         </div>
-        <div class="form-group">
-          <label for="field2">Roll no.</label>
-          <input type="text" class="form-control" name="uroll_no" id="uroll_no" placeholder="Enter field 2" value = "">
-        </div>
-        <div class="form-group">
-          <label for="field3">Email</label>
-          <input type="email" class="form-control" name="uemail" id="uemail" placeholder="Enter field 3" value = "">
-        </div>
-        <div class="form-group">
-          <label for="field3">Password</label>
-          <input type="text" class="form-control" name="upassword" id="upassword" placeholder="Enter field 3" value = "">
-        </div>
-        <div class="form-group">
-          <label for="field3">Courses</label><br />
-            <% course.forEach(course => { %>
-            <label for="<%=course.courseID %>" class= "checkbox-inline">
-            <input type="checkbox" id="<%=course.courseID %>i" name="ucourses" value="<%=course.courseID %>" ><%=course.courseID%> <%= course.name %>
-            </label><br>
-          <% }); %>
-        </div>
-      </div>
-
-      <br>
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-
       </div>
       <div class="footer">
           <p>&copy; 2023 anubhavbinit</p>
@@ -320,6 +398,12 @@
     </div>
 
   <script>
+        function confirmLogout() {
+          if (confirm("Are you sure you want to log out?")) {
+            window.location.href = "/logout";
+          }
+        }
+
   function showFields() {
   var options = document.getElementById("options");
   var option1Fields = document.getElementById("option1Fields");
@@ -371,7 +455,30 @@ for (let i = 0; i < checkboxes.length; i++) {
     selectedCourses.push(checkboxes[i].value);
   }
 }
-console.log(selectedCourses);
+
+  document.addEventListener("DOMContentLoaded", function() {
+  var form = document.querySelector('form');
+  var overlay = document.querySelector('.overlay');
+  var alertMessage = document.querySelector('.alert-success');
+  var closeButton = alertMessage.querySelector('.close');
+
+  form.addEventListener('submit', function(event) {
+    event.preventDefault(); // prevent the form from submitting normally
+
+    // Disable the window with an overlay
+    overlay.style.display = 'block';
+
+    // Show the alert message
+    alertMessage.style.display = 'block';
+
+    // Hide the overlay and submit the form data to the backend when the alert is closed
+    closeButton.addEventListener('click', function() {
+      alertMessage.style.display = 'none';
+      overlay.style.display = 'none';
+      form.submit(); // submit the form data to the backend
+    });
+  });
+});
 </script>
 
 

@@ -55,6 +55,15 @@ main {
   text-align: center;
   margin:3px
 }
+.subheader{
+  background-color: #F8F8F8 ;
+  color: #1F1F1F;
+  padding: 0.5rem;
+  display: block;
+  border-radius: 5px;
+  margin: 3px 3px 7px 3px ;
+}
+
 
 .flip-card {
   display:inline-block;
@@ -103,7 +112,7 @@ main {
 }
 
 .flip-card-front {
-  background: linear-gradient(120deg, white 60%, rgb(231, 231, 231) 88%,
+  background: linear-gradient(120deg, rgb(143, 225, 231) 60%, rgb(231, 231, 231) 88%,
      rgb(211, 211, 211) 40%, rgba(127, 127, 127, 0.603) 48%);
   color: #046380;
 }
@@ -121,14 +130,14 @@ main {
 <body>
   <div class="grid-container">
     <div class="header">
-      <div><h3 id = "headTitle" style="font-weight: bold;">TU_Labs</h3></div>
+      <div><h1 id = "headTitle">LabBuddy</h1></div>
       <div><select name = "user" style="border:none;box-shadow:none;" id="user-menu">
         <option value="" disabled selected><%= user %></option>
-        <option value="/login/Student">My Courses</option>
         <option value="/logout">Logout</option>
       </select></div>
     </div>
     <main>
+      <div class="subheader"><h3>My Courses</h3></div>
     <% course.forEach(innerArr => {
       innerArr.forEach(c => { %>
         <a href="/login/Student/<%= c.courseID %>">

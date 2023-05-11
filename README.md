@@ -12,7 +12,7 @@ Assignment grading and feedback (by teachers)
 Course management (by teachers)
 Reports (for teachers and students)
 
-#Technologies Used
+# Technologies Used
 The system was built using the following technologies:
 
 Node.js

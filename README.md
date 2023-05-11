@@ -4,20 +4,20 @@ This is a web-based system for managing assignments for schools and universities
 # Features
 The system includes the following features:
 
-User authentication (login and registration)
-User roles (teacher and student)
-Assignment creation and publishing (by teachers)
-Assignment submission (by students)
-Assignment grading and feedback (by teachers)
-Course management (by teachers)
-Reports (for teachers and students)
+User authentication (login and registration)<br>
+User roles (teacher and student) <br>
+Assignment creation and publishing (by teachers) <br>
+Assignment submission (by students) <br>
+Assignment grading and feedback (by teachers) <br>
+Course management (by teachers) <br>
+Reports (for teachers and students) <br>
 
 # Technologies Used
 The system was built using the following technologies:
 
-Node.js /n
-Express.js
-MongoDB
-Mongoose
-EJS (templating engine)
-Bootstrap (front-end framework)
+Node.js <br>
+Express.js <br>
+MongoDB <br>
+Mongoose <br>
+EJS (templating engine) <br>
+Bootstrap (front-end framework) <br>
